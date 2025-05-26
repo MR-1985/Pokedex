@@ -8,8 +8,12 @@ header{
     width: 100%;
     margin-bottom: 50px;
 }
+body{
+    height: 100vh;
+}
 #second_body{
     max-width: 1900px;
+    
     display: flex;
     flex-direction: column;
     justify-self: center;
@@ -26,13 +30,23 @@ header{
     column-gap: 20px;
     padding-inline: 20px;
 }
+
 .pkm-name{
     height: 30px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
 }
+#id{
+position: absolute;
+left: 10px;
+}
+#name{
+font-variant: small-caps;
+color: aliceblue;
+}
+
 #pkm-img{
     display: flex;
     justify-content: center;
@@ -40,4 +54,14 @@ header{
 .pkm-imgs{
     height: 200px;
     width: 200px;
+}
+#pkm-atrb{
+    display: flex;
+    justify-content: space-around;
+}
+footer{
+    height: 200px;
+    background: black;
+    width: 100%;
+    margin-bottom: 50px;
 }

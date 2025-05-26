@@ -1,0 +1,44 @@
+.type-badge {
+    padding: 4px 8px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 5px;
+    text-transform: capitalize; /* Erster Buchstabe groß */
+}
+
+/* Typ-spezifische Farben */
+.type-fire {
+    background-color: #F08030; /* warmes Orange-Rot */
+}
+
+.type-water {
+    background-color: #6890F0; /* blau */
+}
+
+.type-grass {
+    background-color: #78C850; /* grün */
+}
+
+.type-electric {
+    background-color: #F8D030; /* gelb */
+}
+
+.type-poison {
+    background-color: #A040A0; /* violett */
+}
+
+.type-flying {
+    background-color: #A890F0; /* hell-lila */
+}
+
+/* weitere Typen nach Bedarf */
+.type-normal {
+    background-color: #A8A878;
+}
+
+/* Default falls unbekannt */
+.type-unbekannt, .type-unknown {
+    background-color: #606060;
+}

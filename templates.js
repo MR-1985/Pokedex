@@ -1,23 +1,36 @@
 function renderPkmCardTemp(pkm, index){
+    //Festlegen der Variablen, die eine Eigenschafft wiedergeben
+    let type1 = pkm.type[0]?.type.name || "UnbekanntUnbekannt";
+    let type2 = pkm.type[1]?.type.name || "";
+    //das eigentliche HTML wird hier erschaffen
     return `
 <div id="poke-card-${index}" class="card">
 
-    <div id="pkm-name-#-${index}" class="bg-secondary pkm-name">
-        <div id="">
-        </div>
-        <div id="name">
-        ${pkm.name}
+    <div id="pkm-name-id-${index}" class="bg-secondary ">
+        <div class="pkm-name">
+            <div id="id">
+                #${pkm.id}
+            </div>
+
+            <div id="name">
+              ${pkm.name}
+            </div>
         </div>
     </div>
 
     <div id="pkm-img">
-    <img class="pkm-imgs" src="${pkm.image}"></img>
+        <img class="pkm-imgs" src="${pkm.image}"></img>
     </div>
 
     <div id="pkm-atrb">
-        <div>
-
+        <div class="type-badge type-${type1}">
+            ${type1}
         </div>
+        
+        ${type2 ? `<div class="type-badge type-${type2}">${type2}</div>` : ""}
+        
+        
+        
     </div>
 </div>
     `
