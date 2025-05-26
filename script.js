@@ -66,6 +66,16 @@ function renderPkmCard(){
     };
 };
 
-function setBackgroundToCard(){
+function visibilityOverlay(index){
+    // const overlay = document.getElementById("overlay");
+    // const contentContainer = document.getElementById("overlay-content-container");
+    document.getElementById("overlay").classList.toggle("d-none");
+    renderOverlayCard(index); 
     
-}
+};
+
+function renderOverlayCard(index){
+    const pkm = allPkm[index];
+    const contentContainerRef = document.getElementById("overlay-content-container");
+    contentContainerRef.innerHTML = renderOverlayCardTemplate(pkm);
+};

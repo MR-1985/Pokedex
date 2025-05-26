@@ -4,7 +4,7 @@ function renderPkmCardTemp(pkm, index){
     let type2 = pkm.type[1]?.type.name || "";
     //das eigentliche HTML wird hier erschaffen
     return `
-<div id="poke-card-${index}" class="card type-${type1}">
+<div onclick="visibilityOverlay(${index})" id="poke-card-${index}" class="card type-${type1}">
 
     <div id="pkm-name-id-${index}">
         <div class="pkm-name">
@@ -32,4 +32,26 @@ function renderPkmCardTemp(pkm, index){
     </div>
 </div>
     `
-}
+};
+
+function renderOverlayCardTemplate(pkm) {
+    const type1 = pkm.type[0]?.type.name || "unbekannt";
+    const type2 = pkm.type[1]?.type.name || "";
+
+    return `
+        <div class="card-overlay type-${type1}">
+            <div class="pkm-name">
+                <div>#${pkm.id}</div>
+                <div>${pkm.name}</div>
+            </div>
+
+            <img class="pkm-imgs-large" src="${pkm.image}" alt="${pkm.name}">
+
+            <div class="type-badge type-${type1}">
+                ${type1}
+            </div>
+
+            ${type2 ? `<div class="type-badge type-${type2}">${type2}</div>` : ""}
+        </div>
+    `;
+};
