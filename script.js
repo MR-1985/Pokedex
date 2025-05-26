@@ -2,11 +2,10 @@
 function onloadGetData(){
     //in der Funktion wird eine Funktion aufgerufen, die alle Daten vorerst laden soll
     loadAllPokemons();
-    
 };
 
 //Basis URL mit allen Daten und Limitter
-const Basic_URL = "https://pokeapi.co/api/v2/pokemon?limit=700&offset=350"
+const Basic_URL = "https://pokeapi.co/api/v2/pokemon?limit=50&offset=0"
 
 //Array mit Möglichkeit alle Daten zu speichern, für weniger URL aufrufe
 let allPkm = [];
@@ -66,3 +65,7 @@ function renderPkmCard(){
         contentRef.innerHTML += renderPkmCardTemp(pkm, index);
     };
 };
+
+function setBackgroundToCard(){
+    
+}

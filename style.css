@@ -5,27 +5,24 @@
 
 header {
     height: 200px;
-    background: black;
+    background-color: rgb(8,33,41);
     width: 100%;
-    margin-bottom: 50px;
+    /* margin-bottom: 50px; */
+    display: flex;
+    justify-content: center;
 }
 
 body {
     height: 100vh;
+    background: rgb(8,33,41);
 }
 
 #second_body {
-    max-width: 1900px;
+    max-width: 1681px;
 
     display: flex;
     flex-direction: column;
     justify-self: center;
-}
-
-.card {
-    width: 200px;
-    height: 300px;
-    margin-bottom: 20px;
 }
 
 #content {
@@ -33,15 +30,29 @@ body {
     flex-flow: wrap;
     justify-content: space-between;
     column-gap: 20px;
-    padding-inline: 20px;
+    padding-inline: 81px;
+    background-color: rgb(5,23,30);
+    padding-top: 50px;
+}
+
+.card {
+    width: 200px;
+    height: 300px;
+    margin-bottom: 20px;
+    background-color: rgb(9,34,42);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    color: white;
+    cursor: pointer;
 }
 
 .pkm-name {
     height: 30px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
     display: flex;
     justify-content: space-around;
+    background-color: rgb(8,33,41);
+    margin-top: 5px;
+    border: solid 1px rgb(21, 77, 95);
+    border-radius: 5px;
 }
 
 #id {
@@ -55,7 +66,7 @@ body {
     color: aliceblue;
 }
 
-#pkm-img {
+#pkm-img-container {
     display: flex;
     justify-content: center;
 }
@@ -63,11 +74,22 @@ body {
 .pkm-imgs {
     height: 200px;
     width: 200px;
+    transition: 500ms linear;
+    filter: drop-shadow(0px 4px 1px rgba(0, 0, 0, 0.8));
+}
+
+.pkm-imgs:hover{
+transform: scale(1.1);
+filter: drop-shadow(4px 8px 1px rgba(0, 0, 0, 0.8));
 }
 
 #pkm-atrb {
     display: flex;
     justify-content: space-around;
+    background-color: rgb(8,33,41);
+    padding-block: 12px;
+    border-radius: 5px;
+    border: solid 1px rgb(21, 77, 95);
 }
 
 footer {
@@ -75,4 +97,18 @@ footer {
     background: black;
     width: 100%;
     margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.headerImage{
+    width: 265px;
+    height: 265px;
+    z-index: 1001;
+}
+
+.footerImage{
+    width: 500px;
+    height: 140px;
 }

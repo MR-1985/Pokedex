@@ -4,9 +4,9 @@ function renderPkmCardTemp(pkm, index){
     let type2 = pkm.type[1]?.type.name || "";
     //das eigentliche HTML wird hier erschaffen
     return `
-<div id="poke-card-${index}" class="card">
+<div id="poke-card-${index}" class="card type-${type1}">
 
-    <div id="pkm-name-id-${index}" class="bg-secondary ">
+    <div id="pkm-name-id-${index}">
         <div class="pkm-name">
             <div id="id">
                 #${pkm.id}
@@ -18,7 +18,7 @@ function renderPkmCardTemp(pkm, index){
         </div>
     </div>
 
-    <div id="pkm-img">
+    <div id="pkm-img-container">
         <img class="pkm-imgs" src="${pkm.image}"></img>
     </div>
 
