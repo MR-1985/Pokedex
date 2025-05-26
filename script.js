@@ -6,7 +6,7 @@ function onloadGetData(){
 };
 
 //Basis URL mit allen Daten und Limitter
-const Basic_URL = "https://pokeapi.co/api/v2/pokemon?limit=13&offset=0"
+const Basic_URL = "https://pokeapi.co/api/v2/pokemon?limit=700&offset=350"
 
 //Array mit Möglichkeit alle Daten zu speichern, für weniger URL aufrufe
 let allPkm = [];

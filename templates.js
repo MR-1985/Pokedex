@@ -1,6 +1,6 @@
 function renderPkmCardTemp(pkm, index){
     //Festlegen der Variablen, die eine Eigenschafft wiedergeben
-    let type1 = pkm.type[0]?.type.name || "UnbekanntUnbekannt";
+    let type1 = pkm.type[0]?.type.name || "unbekannt";
     let type2 = pkm.type[1]?.type.name || "";
     //das eigentliche HTML wird hier erschaffen
     return `
@@ -28,8 +28,6 @@ function renderPkmCardTemp(pkm, index){
         </div>
         
         ${type2 ? `<div class="type-badge type-${type2}">${type2}</div>` : ""}
-        
-        
         
     </div>
 </div>
