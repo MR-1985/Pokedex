@@ -70,7 +70,8 @@ function visibilityOverlay(index){
     // const overlay = document.getElementById("overlay");
     // const contentContainer = document.getElementById("overlay-content-container");
     document.getElementById("overlay").classList.toggle("d-none");
-    renderOverlayCard(index); 
+    renderOverlayCard(index);
+    enableFilter1() ;
     
 };
 
@@ -78,4 +79,34 @@ function renderOverlayCard(index){
     const pkm = allPkm[index];
     const contentContainerRef = document.getElementById("overlay-content-container");
     contentContainerRef.innerHTML = renderOverlayCardTemplate(pkm);
+};
+
+function enableFilter1(){
+    const filter1 = document.getElementById("filter-1");
+    const filter2 = document.getElementById("filter-2");
+    const filter3 = document.getElementById("filter-3");
+
+    filter1.classList.remove("d-none");
+    filter2.classList.add("d-none");
+    filter3.classList.add("d-none");
+};
+
+function enableFilter2(){
+    const filter1 = document.getElementById("filter-1");
+    const filter2 = document.getElementById("filter-2");
+    const filter3 = document.getElementById("filter-3");
+
+    filter1.classList.add("d-none");
+    filter2.classList.remove("d-none");
+    filter3.classList.add("d-none");
+};
+
+function enableFilter3(){
+    const filter1 = document.getElementById("filter-1");
+    const filter2 = document.getElementById("filter-2");
+    const filter3 = document.getElementById("filter-3");
+
+    filter1.classList.add("d-none");
+    filter2.classList.add("d-none");
+    filter3.classList.remove("d-none");
 };
