@@ -5,7 +5,7 @@
 
 header {
     height: 200px;
-    background-color: rgb(8,33,41);
+    background-color: rgb(8, 33, 41);
     width: 100%;
     /* margin-bottom: 50px; */
     display: flex;
@@ -14,7 +14,7 @@ header {
 
 body {
     height: 100vh;
-    background: rgb(8,33,41);
+    background: rgb(8, 33, 41);
 }
 
 #second_body {
@@ -31,7 +31,7 @@ body {
     justify-content: space-between;
     column-gap: 20px;
     padding-inline: 81px;
-    background-color: rgb(5,23,30);
+    background-color: rgb(5, 23, 30);
     padding-top: 50px;
 }
 
@@ -39,7 +39,7 @@ body {
     width: 200px;
     height: 300px;
     margin-bottom: 20px;
-    background-color: rgb(9,34,42);
+    background-color: rgb(9, 34, 42);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     color: white;
     cursor: pointer;
@@ -49,7 +49,7 @@ body {
     height: 30px;
     display: flex;
     justify-content: space-around;
-    background-color: rgb(8,33,41);
+    background-color: rgb(8, 33, 41);
     margin-top: 5px;
     border: solid 1px rgb(21, 77, 95);
     border-radius: 5px;
@@ -69,24 +69,26 @@ body {
 #pkm-img-container {
     display: flex;
     justify-content: center;
+    height: 250px;
 }
 
 .pkm-imgs {
-    height: 200px;
-    width: 200px;
+    height: 125px;
+    width: 125px;
     transition: 500ms linear;
     filter: drop-shadow(0px 4px 1px rgba(0, 0, 0, 0.8));
+    align-self: center;
 }
 
-.pkm-imgs:hover{
-transform: scale(1.1);
-filter: drop-shadow(4px 8px 1px rgba(0, 0, 0, 0.8));
+.pkm-imgs:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(4px 8px 1px rgba(0, 0, 0, 0.8));
 }
 
 #pkm-atrb {
     display: flex;
     justify-content: space-around;
-    background-color: rgb(8,33,41);
+    background-color: rgb(8, 33, 41);
     padding-block: 12px;
     border-radius: 5px;
     border: solid 1px rgb(21, 77, 95);
@@ -102,19 +104,19 @@ footer {
     align-items: center;
 }
 
-.headerImage{
+.headerImage {
     width: 265px;
     height: 265px;
     z-index: 1001;
 }
 
-.footerImage{
+.footerImage {
     width: 500px;
     height: 140px;
 }
 
-#overlay{
-    position:absolute;
+#overlay {
+    position: absolute;
     top: 200px;
     left: 0px;
     z-index: 2;
@@ -124,17 +126,41 @@ footer {
     cursor: pointer;
 }
 
-#overlay-content-container{
+#overlay-content-container {
     display: flex;
     justify-content: center;
 }
 
-.card-overlay{
-margin-top: 100px;
-height: 600px;
-width: 300px;
+.card-overlay {
+    margin-top: 100px;
+    height: 600px;
+    width: 300px;
 }
 
-.h-500{
-    height: 500px;
+.pkm-scale {
+    transform: scale(2.0);
+    align-self: center;
+    filter: drop-shadow(20px 16px 1px rgba(0, 0, 0, 0.8));
+    transition: 1300ms ease-out;
+}
+
+.pkm-scale-start{
+    transform: scale(1.5);
+    align-self: center;
+    filter: drop-shadow(20px 16px 1px rgba(0, 0, 0, 0.8));
+    transition: 1300ms ease-out;
+}
+
+.no-scale {
+    transform: scale(2.5);
+    filter: drop-shadow(4px 8px 1px rgba(0, 0, 0, 0.8));
+    transition: 200ms linear;
+}
+
+.h-500 {
+    height: 560px;
+}
+
+.badge {
+    width: 100%;
 }

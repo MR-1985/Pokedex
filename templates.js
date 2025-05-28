@@ -1,5 +1,6 @@
 function renderPkmCardTemp(pkm, index) {
     //Festlegen der Variablen, die eine Eigenschafft wiedergeben
+    
     let type1 = pkm.type[0]?.type.name || "unbekannt";
     let type2 = pkm.type[1]?.type.name || "";
     //das eigentliche HTML wird hier erschaffen
@@ -19,7 +20,7 @@ function renderPkmCardTemp(pkm, index) {
     </div>
 
     <div id="pkm-img-container">
-        <img class="pkm-imgs" src="${pkm.image}"></img>
+        <img id="pkm-cards" class="pkm-imgs pkm-cards" src="${pkm.image}"></img>
     </div>
 
     <div id="pkm-atrb">
@@ -31,7 +32,7 @@ function renderPkmCardTemp(pkm, index) {
         
     </div>
 </div>
-    `
+    `  
 };
 
 function renderOverlayCardTemplate(pkm, index) {
@@ -39,7 +40,7 @@ function renderOverlayCardTemplate(pkm, index) {
     const type2 = pkm.type[1]?.type.name || "";
 
     return `
-    <div onclick="event.stopPropagation()" id="poke-card-${index}" class="card mt-5 w-25 h-500 type-${type1}">
+    <div onclick="event.stopPropagation()" id="poke-card-${index}" class="card mt-5 w-50 h-500 type-${type1}">
 
         <div id="pkm-name-id-${index}">
             <div class="pkm-name">
@@ -54,7 +55,7 @@ function renderOverlayCardTemplate(pkm, index) {
         </div>
 
         <div id="pkm-img-container">
-            <img class="pkm-imgs" src="${pkm.image}"></img>
+            <img id="imgInOverlayCard" class="pkm-imgs no-hover" src="${pkm.image}"></img>
         </div>
 
         <div id="pkm-atrb">
@@ -69,14 +70,14 @@ function renderOverlayCardTemplate(pkm, index) {
         
         <div id="filter-container" class="d-flex justify-content-between pe-4 ps-4">
 
-            <div onclick="enableFilter1()" id="filter-${index}" class="badge  border mt-1">
-                schalter 1
+            <div onclick="enableFilter(1)" id="filter-${index}" class="badge  border mt-1">
+                main
             </div>
-            <div onclick="enableFilter2()" id="filter-${index}" class="badge  border mt-1">
-                schalter 2
+            <div onclick="enableFilter(2)" id="filter-${index}" class="badge  border mt-1">
+                Stats
             </div>
-            <div onclick="enableFilter3()" id="filter-${index}" class="badge  border mt-1">
-                schalter 3
+            <div onclick="enableFilter(3)" id="filter-${index}" class="badge  border mt-1">
+                evo
             </div>
 
         </div>

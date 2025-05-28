@@ -62,51 +62,98 @@ function renderPkmCard(){
         //Aufruf an dem festgelegten Ort ein TemplateLiteral auszuführen
         //mitgegeben wird die Variable, die den Index verkörpert und der Index
         //der Stelle, wo er sich gerade befindet.
-        contentRef.innerHTML += renderPkmCardTemp(pkm, index);
+        contentRef.innerHTML += renderPkmCardTemp(pkm, index); 
     };
+    scalePkmCards();
+};
+
+function scalePkmCards(){
+    // Alle Elemente mit Klasse "pkm-cards" auswählen
+    let imgPkmCards = document.querySelectorAll(".pkm-cards");
+    if(imgPkmCards.length > 0){
+        setTimeout(() => {
+            imgPkmCards.forEach(card => {
+                card.classList.remove("pkm-hidden");
+                card.classList.add("pkm-scale-start");
+            });
+        }, 900);
+    }
+};
+
+function scalePkm(){
+    let imgInOverlayCard = document.getElementById("imgInOverlayCard");
+    if(imgInOverlayCard){
+        setTimeout(() => {
+            imgInOverlayCard.classList.remove("pkm-hidden");
+            imgInOverlayCard.classList.add("pkm-scale");
+        }, 900);
+    } 
 };
 
 function visibilityOverlay(index){
-    // const overlay = document.getElementById("overlay");
-    // const contentContainer = document.getElementById("overlay-content-container");
-    document.getElementById("overlay").classList.toggle("d-none");
-    renderOverlayCard(index);
-    enableFilter1() ;
-    
+    const overlay = document.getElementById("overlay");
+    const contentRef = document.getElementById("content");
+    const isOverlayNotVisible = overlay.classList.contains("d-none");
+    if(isOverlayNotVisible){
+        overlay.classList.remove("d-none");
+        contentRef.classList.add("d-none");
+        renderOverlayCard(index);
+        enableFilter(1);
+    }else{
+        contentRef.classList.remove("d-none")
+        overlay.classList.add("d-none");
+    };
 };
 
 function renderOverlayCard(index){
     const pkm = allPkm[index];
     const contentContainerRef = document.getElementById("overlay-content-container");
     contentContainerRef.innerHTML = renderOverlayCardTemplate(pkm);
+    scalePkm();
 };
 
-function enableFilter1(){
-    const filter1 = document.getElementById("filter-1");
-    const filter2 = document.getElementById("filter-2");
-    const filter3 = document.getElementById("filter-3");
+function enableFilter(filterNumber) {
+    const filters = [
+        document.getElementById("filter-1"),
+        document.getElementById("filter-2"),
+        document.getElementById("filter-3")
+    ];
 
-    filter1.classList.remove("d-none");
-    filter2.classList.add("d-none");
-    filter3.classList.add("d-none");
+    filters.forEach((filter, index) => {
+        if (index === filterNumber - 1) {
+            filter.classList.remove("d-none");
+        } else {
+            filter.classList.add("d-none");
+        }
+    });
 };
 
-function enableFilter2(){
-    const filter1 = document.getElementById("filter-1");
-    const filter2 = document.getElementById("filter-2");
-    const filter3 = document.getElementById("filter-3");
+// function enableFilter1(){
+//     const filter1 = document.getElementById("filter-1");
+//     const filter2 = document.getElementById("filter-2");
+//     const filter3 = document.getElementById("filter-3");
 
-    filter1.classList.add("d-none");
-    filter2.classList.remove("d-none");
-    filter3.classList.add("d-none");
-};
+//     filter1.classList.remove("d-none");
+//     filter2.classList.add("d-none");
+//     filter3.classList.add("d-none");
+// };
 
-function enableFilter3(){
-    const filter1 = document.getElementById("filter-1");
-    const filter2 = document.getElementById("filter-2");
-    const filter3 = document.getElementById("filter-3");
+// function enableFilter2(){
+//     const filter1 = document.getElementById("filter-1");
+//     const filter2 = document.getElementById("filter-2");
+//     const filter3 = document.getElementById("filter-3");
 
-    filter1.classList.add("d-none");
-    filter2.classList.add("d-none");
-    filter3.classList.remove("d-none");
-};
+//     filter1.classList.add("d-none");
+//     filter2.classList.remove("d-none");
+//     filter3.classList.add("d-none");
+// };
+
+// function enableFilter3(){
+//     const filter1 = document.getElementById("filter-1");
+//     const filter2 = document.getElementById("filter-2");
+//     const filter3 = document.getElementById("filter-3");
+
+//     filter1.classList.add("d-none");
+//     filter2.classList.add("d-none");
+//     filter3.classList.remove("d-none");
+// };
