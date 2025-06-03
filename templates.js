@@ -1,6 +1,6 @@
-function renderPkmCardTemp(pkm, index) {
+function renderPkmCardTemp(index, pkm) {
     //Festlegen der Variablen, die eine Eigenschafft wiedergeben
-    
+
     let type1 = pkm.type[0]?.type.name || "unbekannt";
     let type2 = pkm.type[1]?.type.name || "";
     //das eigentliche HTML wird hier erschaffen
@@ -32,15 +32,15 @@ function renderPkmCardTemp(pkm, index) {
         
     </div>
 </div>
-    `  
+    `
 };
 
-function renderOverlayCardTemplate(pkm, index) {
+function renderOverlayCardTemplate(index, pkm) {
     const type1 = pkm.type[0]?.type.name || "unbekannt";
     const type2 = pkm.type[1]?.type.name || "";
 
     return `
-    <div onclick="event.stopPropagation()" id="poke-card-${index}" class="card mt-5 w-50 h-500 type-${type1}">
+    <div onclick="event.stopPropagation()" id="poke-card-${index}" class=" mt-5 h-600 type-${type1}">
 
         <div id="pkm-name-id-${index}">
             <div class="pkm-name">
@@ -70,13 +70,13 @@ function renderOverlayCardTemplate(pkm, index) {
         
         <div id="filter-container" class="d-flex justify-content-between pe-4 ps-4">
 
-            <div onclick="enableFilter(1)" id="filter-${index}" class="badge  border mt-1">
+            <div onclick="enableFilterTab(1)" id="filter-tab-(1)" class="badge  border mt-1">
                 main
             </div>
-            <div onclick="enableFilter(2)" id="filter-${index}" class="badge  border mt-1">
-                Stats
+            <div onclick="enableFilterTab(2)" id="filter-tab-(2)" class="badge  border mt-1">
+                stats
             </div>
-            <div onclick="enableFilter(3)" id="filter-${index}" class="badge  border mt-1">
+            <div onclick="enableFilterTab(3)" id="filter-tab-(3)" class="badge  border mt-1">
                 evo
             </div>
 
@@ -84,13 +84,13 @@ function renderOverlayCardTemplate(pkm, index) {
 
         <div>
 
-            <div id="filter-1" class="">
+            <div id="main" class="">
                 1
             </div>
-            <div id="filter-2" class="">
+            <div id="stats" class="">
                 2
             </div>
-            <div id="filter-3" class="">
+            <div id="evo" class="">
                 3
             </div>
 
@@ -99,3 +99,32 @@ function renderOverlayCardTemplate(pkm, index) {
     </div>
     `
 };
+
+function mainTabTemp(index) {
+    const pkm = allPkm[index];
+    //.map durchsucht alle objekte im Array. a = Platzhalter und wird zu allen Namen des Objektes ability.
+    //.join schreibt alles als Text in den p-tag. 
+    //(", ") trennt die Wörter mit einem Komma
+    return `   
+    <p>Abilities: ${pkm.abilities.map(a => a.ability.name).join(', ')}</p>
+        <p>Height: ${pkm.height}</p>
+        <p>Weight: ${pkm.weight}</p>
+        <p>Base Experience: ${pkm.base_experience}</p>
+        `
+}
+
+function statsTabTemp(index) {
+    const pkm = allPkm[index];
+
+    const statsForStatsTab = pkm.stats.map(statObj => {
+        const statName = statObj.stat.name;
+        const baseStat = statObj.base_stat;
+        return `<p>${statName}: ${baseStat}</p>`;
+    }).join('');
+
+    return statsForStatsTab;
+}
+
+    function evoTabTemp(index) {
+
+    }

@@ -124,17 +124,18 @@ footer {
     width: 100%;
     background-color: black;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
 }
 
 #overlay-content-container {
-    display: flex;
-    justify-content: center;
+    width: 100%;
+    max-width: 450px;
 }
 
 .card-overlay {
     margin-top: 100px;
     height: 600px;
-    width: 300px;
 }
 
 .pkm-scale {
@@ -157,10 +158,22 @@ footer {
     transition: 200ms linear;
 }
 
-.h-500 {
-    height: 560px;
+.h-600 {
+    height: 660px;
 }
+
 
 .badge {
     width: 100%;
+}
+
+.d-none{
+    display: none;
+}
+
+p{
+    padding-inline: 20px;
+    padding-top: 10px;
+    color: aliceblue;
+    font-weight: bold;
 }
