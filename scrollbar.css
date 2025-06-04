@@ -1,0 +1,35 @@
+/* Scrollbar Breite */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px; /* für horizontale scrollbar */
+}
+
+/* Hintergrund der Scrollbar (Track) */
+::-webkit-scrollbar-track {
+  background: white;
+  border: 2px solid black;
+  border-radius: 16px;
+}
+
+/* Schieber (Thumb) */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, red 50%, white 50%);
+  border: 2px solid black;
+  border-radius: 16px;
+  position: relative;
+}
+
+/* kleiner Kreis in der Mitte (Pseudo-Element am Thumb) */
+::-webkit-scrollbar-thumb::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  background: white;
+  border: 2px solid black;
+  border-radius: 50%;
+  box-sizing: border-box;
+}

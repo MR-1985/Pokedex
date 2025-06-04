@@ -15,6 +15,7 @@ header {
 body {
     height: 100vh;
     background: rgb(8, 33, 41);
+    overflow-x: clip;
 }
 
 #second_body {
@@ -28,7 +29,7 @@ body {
 #content {
     display: flex;
     flex-flow: wrap;
-    justify-content: space-between;
+    justify-content: center;
     column-gap: 20px;
     padding-inline: 81px;
     background-color: rgb(5, 23, 30);
@@ -45,6 +46,11 @@ body {
     cursor: pointer;
 }
 
+.pkm-name-id {
+    display: flex;
+    justify-content: center;
+}
+
 .pkm-name {
     height: 30px;
     display: flex;
@@ -59,6 +65,24 @@ body {
     position: absolute;
     left: 10px;
     color: white;
+}
+
+.pkm-name-id-overlay-card {
+    color: white;
+    display: block;
+}
+
+.pkm-name-overlay-card {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 20px;
+    width: 100%;
+}
+
+.pkm-id-overlay-card {
+    position: relative;
+    left: 10px;
 }
 
 #name {
@@ -130,7 +154,8 @@ footer {
 
 #overlay-content-container {
     width: 100%;
-    max-width: 450px;
+    max-width: 470px;
+    padding-inline: 20px;
 }
 
 .card-overlay {
@@ -145,7 +170,7 @@ footer {
     transition: 1300ms ease-out;
 }
 
-.pkm-scale-start{
+.pkm-scale-start {
     transform: scale(1.5);
     align-self: center;
     filter: drop-shadow(20px 16px 1px rgba(0, 0, 0, 0.8));
@@ -167,13 +192,28 @@ footer {
     width: 100%;
 }
 
-.d-none{
+.d-none {
     display: none;
 }
 
-p{
+p {
     padding-inline: 20px;
     padding-top: 10px;
     color: aliceblue;
     font-weight: bold;
+}
+
+.evo-container {
+    display: flex;
+}
+
+.evo-img {
+    height: 95px;
+    width: 95px;
+    transition: 500ms linear;
+    filter: drop-shadow(0px 4px 1px rgba(0, 0, 0, 0.8));
+}
+
+.evo-img:hover {
+    transform: scale(1.2);
 }

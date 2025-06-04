@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="bootstrap-5.3.5-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./colors.css">
+    <link rel="stylesheet" href="./scrollbar.css">
     <script src="./bootstrap-5.3.5-dist/js/bootstrap.js"></script>
     <script src="./templates.js"></script>
 
@@ -15,7 +16,7 @@
 
 <body onload="onloadGetData()">
     <header id="header">
-        <img class="headerImage" src="./imgs/headder.png" alt="">
+        <img onclick="closeOverlay()" class="headerImage" src="./imgs/headder.png" alt="">
     </header>
 
     <div onclick="visibilityOverlay()" id="overlay" class="d-none">

@@ -12,6 +12,7 @@ let allPkm = [];
 
 //laden der URL-Daten
 async function loadAllPokemons() {
+    
     //Laden und Warten auf alle Daten aus der URL
     let response = await fetch(Basic_URL);
     //Variable erstellen die das JSON-Format des Inhaltes der URL speichert
@@ -20,6 +21,7 @@ async function loadAllPokemons() {
     let data = responseToJson.results;
     //Ausgabe alles Daten zu allen geladenen PKM
     // console.log(responseToJson)
+    console.log(responseToJson)
     console.log(data)
     //Aufruf zum Ausführen der Funktion zum Laden der Details
     await loadPkmDetails(data);
@@ -38,6 +40,9 @@ async function loadPkmDetails(data) {
         let detailData = await detailResponse.json();
         //Anzeige der Details für weiter eventuelle Details zum anzeigen
         console.log(detailData);
+        //laden der evolutionsbilder
+        let evoData = await loadEvoChain(detailData);
+        
         //Speichern der Details für weniger URL-Anfragen
         allPkm.push({
             name: detailData.name,
@@ -49,8 +54,46 @@ async function loadPkmDetails(data) {
             weight: detailData.weight,
             base_experience: detailData.base_experience,
             stats: detailData.stats,
+            evolutions: evoData
         });
         console.log(allPkm)
+    }
+};
+
+async function loadEvoChain(detailData){
+    let speciesResponse = await fetch (detailData.species.url);
+    let speciesData = await speciesResponse.json();
+    console.log(speciesData);
+    let chainResponse = await fetch (speciesData.evolution_chain.url)
+    let evoData = await chainResponse.json();
+    console.log(evoData)
+    let evoImages = [];
+    await traverseEvoChain(evoData.chain, evoImages);
+    console.log(evoImages)
+    return evoImages;
+};
+
+async function traverseEvoChain(chain, evoImages) {
+        if (!chain) return;
+
+        const name = chain.species.name;
+        const image = await getPokemonImage(name);
+        evoImages.push({ name, image });
+
+        // Nur die erste Evolution in jeder Stufe berücksichtigen (standard)
+        if (chain.evolves_to.length > 0) {
+            await traverseEvoChain(chain.evolves_to[0], evoImages);
+        }
+    }
+
+async function getPokemonImage(pokeName){
+    try{
+        let response = await fetch (`https://pokeapi.co/api/v2/pokemon/${pokeName}`)
+        let data = await response.json();
+        return data.sprites.front_default
+    }catch (error){
+        console.error("Error loading image for ${pokeName}:", error);
+        return "https://via.placeholder.com/96";
     }
 };
 
@@ -95,6 +138,16 @@ function scalePkm() {
     }
 };
 
+function closeOverlay(){
+    const overlay = document.getElementById("overlay");
+    const contentRef = document.getElementById("content");
+    const isOverlayNotVisible = overlay.classList.contains("d-none");
+    if (!isOverlayNotVisible) {
+        overlay.classList.add("d-none"); //daher remove
+        contentRef.classList.remove("d-none"); // rest verschwinden lassen  
+    }
+}
+
 function visibilityOverlay(index) {
     const overlay = document.getElementById("overlay");
     const contentRef = document.getElementById("content");
@@ -125,30 +178,30 @@ return [
         ];
 };
 
-function enableFilterTab(filterNumber) {
+function enableFilterTab(pkmIndex, filterNumber) {
     const filters = getFilters(); //alle Filter sind nun in der Variable Filters drin
     filters.forEach((filter, index) => {
-        const isActivFilter = index === filterNumber - 1;
+        const isActivFilter = index === filterNumber;
         if (isActivFilter) {
             filter.classList.remove("d-none");
-            renderTempForActivFilter(index);
+            renderTempForActivFilter(index, pkmIndex );
         } else {
             filter.classList.add("d-none");
         }
     });
 };
 
-function renderTempForActivFilter(index){
+function renderTempForActivFilter(index, pkmIndex ){
     switch (index) {
         case 0:
-            document.getElementById("main").innerHTML = mainTabTemp(index);
+            document.getElementById("main").innerHTML = mainTabTemp(pkmIndex);
             break;
         case 1:
-            document.getElementById("stats").innerHTML = statsTabTemp(index);
+            document.getElementById("stats").innerHTML = statsTabTemp(pkmIndex);
             break;
 
         default:
-            document.getElementById("evo").innerHTML = evoTabTemp(index);
+            document.getElementById("evo").innerHTML = evoTabTemp(pkmIndex);
             break;
     }
 

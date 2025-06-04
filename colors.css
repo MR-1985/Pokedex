@@ -13,77 +13,95 @@
 
 .type-normal {
     background-color: #A8A77A;
+    background-image: linear-gradient(to bottom, #B5B5B5 50%, #9B9B9B 50%);
 }
 
 .type-fire {
     background-color: #EE8130;
+    background-image: linear-gradient(to bottom, #EE3C24 50%, #C61700 50%);
 }
 
 .type-water {
     background-color: #6390F0;
+    background-image: linear-gradient(to bottom, #4D89E3 50%, #1F5EBC 50%);
 }
 
 .type-electric {
     background-color: #F7D02C;
     color: #000;
+    background-image: linear-gradient(to bottom, #F8C323 50%, #DEAA0D 50%);
 }
 
 .type-grass {
     background-color: #7AC74C;
+    background-image: linear-gradient(to bottom, #3FAE28 50%, #2D9019 50%);
 }
 
 .type-ice {
     background-color: #96D9D6;
     color: #000;
+    background-image: linear-gradient(to bottom, #36BCD8 50%, #24A2BD 50%);
 }
 
 .type-fighting {
     background-color: #C22E28;
+    background-image: linear-gradient(to bottom, #A74D32 50%, #792F18 50%);
 }
 
 .type-poison {
     background-color: #A33EA1;
+    background-image: linear-gradient(to bottom, #B55AA5 50%, #823A75 50%);
 }
 
 .type-ground {
     background-color: #E2BF65;
     color: #000;
+    background-image: linear-gradient(to bottom, #C7A649 50%, #A68935 50%);
 }
 
 .type-flying {
     background-color: #A98FF3;
+    background-image: linear-gradient(to bottom, #70B9D8 50%, #4392B3 50%);
 }
 
 .type-psychic {
     background-color: #F95587;
+    background-image: linear-gradient(to bottom, #F2679E 50%, #CA4076 50%);
 }
 
 .type-bug {
     background-color: #A6B91A;
+    background-image: linear-gradient(to bottom, #B2B02D 50%, #918F23 50%);
 }
 
 .type-rock {
     background-color: #B6A136;
     color: #000;
+    background-image: linear-gradient(to bottom, #C3AC5F 50%, #988544 50%);
 }
 
 .type-ghost {
     background-color: #735797;
+    background-image: linear-gradient(to bottom, #6566BC 50%, #454577 50%);
 }
 
 .type-dragon {
     background-color: #6F35FC;
+        background-image: linear-gradient(to bottom, #6047F8 50%, #452DD5 50%);
 }
 
 .type-dark {
     background-color: #705746;
+    background-image: linear-gradient(to bottom, #735A4A 50%, #5E493B 50%);
 }
 
 .type-steel {
     background-color: #B7B7CE;
     color: #000;
+    background-image: linear-gradient(to bottom, #A8A5AC 50%, #87848A 50%);
 }
 
 .type-fairy {
     background-color: #D685AD;
+    background-image: linear-gradient(to bottom, #E6A5E6 50%, #C284C2 50%);
 }

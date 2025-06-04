@@ -40,15 +40,15 @@ function renderOverlayCardTemplate(index, pkm) {
     const type2 = pkm.type[1]?.type.name || "";
 
     return `
-    <div onclick="event.stopPropagation()" id="poke-card-${index}" class=" mt-5 h-600 type-${type1}">
+    <div onclick="event.stopPropagation()" id="poke-card-${index}" class="rounded-4 mt-5 h-600 type-${type1}">
 
-        <div id="pkm-name-id-${index}">
-            <div class="pkm-name">
-                <div id="id">
+        <div id="pkm-name-id-${index}" class="pkm-name-id-overlay-card">
+            <div class="pkm-name-overlay-card">
+                <div class="pkm-id-overlay-card">
                     #${pkm.id}
                 </div>
 
-                <div id="name">
+                <div class="pkm-name-overlay-card">
                   ${pkm.name}
                 </div>
             </div>
@@ -68,15 +68,15 @@ function renderOverlayCardTemplate(index, pkm) {
         </div>
 
         
-        <div id="filter-container" class="d-flex justify-content-between pe-4 ps-4">
+        <div id="filter-container" class="d-flex justify-content-between ">
 
-            <div onclick="enableFilterTab(1)" id="filter-tab-(1)" class="badge  border mt-1">
+            <div onclick="enableFilterTab(${index}, 0)" id="filter-tab-(1)" class="badge  border mt-1">
                 main
             </div>
-            <div onclick="enableFilterTab(2)" id="filter-tab-(2)" class="badge  border mt-1">
+            <div onclick="enableFilterTab(${index}, 1)" id="filter-tab-(2)" class="badge  border mt-1">
                 stats
             </div>
-            <div onclick="enableFilterTab(3)" id="filter-tab-(3)" class="badge  border mt-1">
+            <div onclick="enableFilterTab(${index}, 2)" id="filter-tab-(3)" class="badge  border mt-1">
                 evo
             </div>
 
@@ -85,13 +85,13 @@ function renderOverlayCardTemplate(index, pkm) {
         <div>
 
             <div id="main" class="">
-                1
+                
             </div>
             <div id="stats" class="">
-                2
+                
             </div>
             <div id="evo" class="">
-                3
+                
             </div>
 
         </div>
@@ -125,6 +125,24 @@ function statsTabTemp(index) {
     return statsForStatsTab;
 }
 
-    function evoTabTemp(index) {
+function evoTabTemp(index) {
+    const pkm = allPkm[index];
+    const evolutions = pkm.evolutions;
 
+    if (!evolutions || evolutions.length === 0) {
+        return `<p>${pkm.name} has no evolutions.</p>`;
     }
+
+    return evolutions.map(evo => `
+        <div class="evo-container">
+            <img src="${evo.image}" alt="${evo.name}" class="evo-img">
+            <p>${evo.name}</p>
+        </div>
+    `).join('');
+    // return `
+    //     <img src="${pkm.image}"></img>
+    //     <img src="${pkm.image}"></img>
+    //     <img src="${pkm.image}"></img>
+    // `
+    // return `<p>Evolution info for ${pkm.name} is not implemented yet.</p>`;
+}
