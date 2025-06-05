@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./colors.css">
     <link rel="stylesheet" href="./scrollbar.css">
+    <link rel="stylesheet" href="./loading-spinner.css">
     <script src="./bootstrap-5.3.5-dist/js/bootstrap.js"></script>
     <script src="./templates.js"></script>
 
@@ -15,9 +16,11 @@
 </head>
 
 <body onload="onloadGetData()">
-    <header id="header">
+    <header onclick="closeOverlay()" id="header">
         <img onclick="closeOverlay()" class="headerImage" src="./imgs/headder.png" alt="">
     </header>
+
+    <div id="loadingSpinner" class="pokeball pokeball-spinner"></div>
 
     <div onclick="visibilityOverlay()" id="overlay" class="d-none">
         <div id="overlay-content-container">
