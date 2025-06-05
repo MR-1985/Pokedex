@@ -139,10 +139,6 @@ function evoTabTemp(index) {
             <p>${evo.name}</p>
         </div>
     `).join('');
-    // return `
-    //     <img src="${pkm.image}"></img>
-    //     <img src="${pkm.image}"></img>
-    //     <img src="${pkm.image}"></img>
-    // `
-    // return `<p>Evolution info for ${pkm.name} is not implemented yet.</p>`;
 }
+
+

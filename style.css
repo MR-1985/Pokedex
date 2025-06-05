@@ -153,6 +153,10 @@ footer {
     justify-content: center;
 }
 
+.spinner-overlay{
+height: calc(100vh - 350px);
+}
+
 #overlay-content-container {
     width: 100%;
     max-width: 470px;

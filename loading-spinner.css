@@ -5,11 +5,15 @@
     position: relative;
     margin: 20px auto;
     animation: spin 1s linear infinite;
+    z-index: 1001;
+    overflow-y:auto;
 }
 
 .pokeball {
-    width: 200px;
-    height: 200px;
+    width: 50vmin; /* Kleinere Viewport-Dimension */
+    min-width: 260px;
+    height: 50vmin; /* Quadratisch */
+    min-height: 260px;
     background: linear-gradient(to bottom, #ff0000 50%, #ffffff 50%);
     border-radius: 50%;
     position: relative;
@@ -23,8 +27,10 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 20px;
-    height: 20px;
+    width: 5vmin; /* Proportional */
+    min-width: 20px;
+    height: 5vmin;
+    min-height: 20px;
     background: #ffffff;
     border: 3px solid #000000;
     border-radius: 50%;
@@ -37,7 +43,8 @@
     top: 50%;
     left: 0;
     right: 0;
-    height: 6px;
+    height: 1.5vmin; /* Proportional */
+    min-height: 6px;
     background: #000000;
     transform: translateY(-50%);
 }
@@ -46,7 +53,6 @@
     0% {
         transform: rotate(0deg);
     }
-
     100% {
         transform: rotate(360deg);
     }

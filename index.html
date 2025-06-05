@@ -20,20 +20,34 @@
         <img onclick="closeOverlay()" class="headerImage" src="./imgs/headder.png" alt="">
     </header>
 
-    <div id="loadingSpinner" class="pokeball pokeball-spinner"></div>
+    <div id="spinner-overlay" class="spinner-overlay d-none">
+        <div id="loadingSpinner" class="pokeball pokeball-spinner">
+        </div>
+    </div>
 
-    <div onclick="visibilityOverlay()" id="overlay" class="d-none">
+
+    <div id="overlay" class="d-none">
         <div id="overlay-content-container">
 
         </div>
     </div>
+
 
     <div id="second_body">
 
         <div id="content">
 
         </div>
-
+        <div style="display: flex; justify-content: space-around;">
+            <button onclick="loadMore(0); disableButton(0)" id="load-more-button-0" class="btn btn-secondary">36 -
+                75</button>
+            <button onclick="loadMore2(1); disableButton(1)" id="load-more-button-1" class="btn btn-secondary">76 -
+                110</button>
+            <button onclick="loadMore3(2); disableButton(2)" id="load-more-button-2" class="btn btn-secondary">111 -
+                145</button>
+            <button onclick="loadAll(3); disableButton(3)" id="load-more-button-3" class="btn btn-secondary">load
+                All</button>
+        </div>
     </div>
     <footer id="footer">
         <img class="footerImage" src="./imgs/pokeapi_256.png" alt="">

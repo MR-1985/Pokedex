@@ -5,17 +5,21 @@ function onloadGetData() {
 };
 
 //Basis URL mit allen Daten und Limitter
-const Basic_URL = "https://pokeapi.co/api/v2/pokemon?limit=25&offset=0"
+const Basic_URL = "https://pokeapi.co/api/v2/pokemon?limit=35&offset=0"
 
 //Array mit Möglichkeit alle Daten zu speichern, für weniger URL aufrufe
 let allPkm = [];
 
 function showSpinner() {
+    loadingSpinnerOverlay();
     document.getElementById('loadingSpinner').style.display = 'block';
+    
 }
 
 function hideSpinner() {
     document.getElementById('loadingSpinner').style.display = 'none';
+    
+    closeOverlay();
 }
 
 //laden der URL-Daten
@@ -102,7 +106,7 @@ async function getPokemonImage(pokeName) {
         return data.sprites.front_default
     } catch (error) {
         console.error("Error loading image for ${pokeName}:", error);
-        return "https://via.placeholder.com/96";
+        return
     }
 };
 
@@ -215,3 +219,83 @@ function renderTempForActivFilter(index, pkmIndex) {
     }
 
 };
+
+async function loadMore() {
+    const second_URL = "https://pokeapi.co/api/v2/pokemon?limit=75&offset=35"
+    showSpinner();
+    //Laden und Warten auf alle Daten aus der URL
+    let response = await fetch(second_URL);
+    //Variable erstellen die das JSON-Format des Inhaltes der URL speichert
+    let responseToJson = await response.json();
+    //Variable erstellen mit den "results" aus der JSON
+    let data = responseToJson.results;
+    //Aufruf zum Ausführen der Funktion zum Laden der Details
+    await loadPkmDetails(data);
+    hideSpinner();
+    //Aufruf zum Ausführen der Erstellung der Karten
+    renderPkmCard();
+
+};
+
+async function loadMore2() {
+    const second_URL = "https://pokeapi.co/api/v2/pokemon?limit=110&offset=76"
+    showSpinner();
+    //Laden und Warten auf alle Daten aus der URL
+    let response = await fetch(second_URL);
+    //Variable erstellen die das JSON-Format des Inhaltes der URL speichert
+    let responseToJson = await response.json();
+    //Variable erstellen mit den "results" aus der JSON
+    let data = responseToJson.results;
+    //Aufruf zum Ausführen der Funktion zum Laden der Details
+    await loadPkmDetails(data);
+    hideSpinner();
+    //Aufruf zum Ausführen der Erstellung der Karten
+    renderPkmCard();
+};
+async function loadMore3() {
+    const second_URL = "https://pokeapi.co/api/v2/pokemon?limit=145&offset=111"
+    showSpinner();
+    //Laden und Warten auf alle Daten aus der URL
+    let response = await fetch(second_URL);
+    //Variable erstellen die das JSON-Format des Inhaltes der URL speichert
+    let responseToJson = await response.json();
+    //Variable erstellen mit den "results" aus der JSON
+    let data = responseToJson.results;
+    //Aufruf zum Ausführen der Funktion zum Laden der Details
+    await loadPkmDetails(data);
+    hideSpinner();
+    //Aufruf zum Ausführen der Erstellung der Karten
+    renderPkmCard();
+};
+async function loadAll() {
+    const second_URL = "https://pokeapi.co/api/v2/pokemon?limit=1015&offset=146"
+    showSpinner();
+    //Laden und Warten auf alle Daten aus der URL
+    let response = await fetch(second_URL);
+    //Variable erstellen die das JSON-Format des Inhaltes der URL speichert
+    let responseToJson = await response.json();
+    //Variable erstellen mit den "results" aus der JSON
+    let data = responseToJson.results;
+    //Aufruf zum Ausführen der Funktion zum Laden der Details
+    await loadPkmDetails(data);
+    hideSpinner();
+    //Aufruf zum Ausführen der Erstellung der Karten
+    renderPkmCard();
+};
+
+function loadingSpinnerOverlay() {
+    const overlay = document.getElementById("overlay");
+    const contentRef = document.getElementById("content");
+    const isOverlayNotVisible = overlay.classList.contains("d-none"); //Overlay ist unsichtbar durch d-none
+    if (isOverlayNotVisible) {
+        overlay.classList.remove("d-none"); //daher remove
+        contentRef.classList.add("d-none"); // rest verschwinden lassen
+    } else {
+        contentRef.classList.remove("d-none") //ansonsten wenn das Overlay zu sehen ist, dann unsichtbar machen und Content anzeigen
+        overlay.classList.add("d-none");
+    };
+};
+
+function disableButton(index) {
+    document.getElementById(`load-more-button-${index}`).disabled = true;
+}
