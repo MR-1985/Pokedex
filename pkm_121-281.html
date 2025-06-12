@@ -15,7 +15,7 @@
     <title>Pokedex</title>
 </head>
 
-<body onload="onloadGetData()">
+<body onload="loadMore2()">
     <header onclick="closeOverlay()" id="header">
         <img onclick="closeOverlay()" class="headerImage" src="./imgs/headder.png" alt="">
     </header>
@@ -39,11 +39,12 @@
 
         </div>
         <div class="button-container" style="display: flex; justify-content: space-around;">
-            <a href="./pkm_64-171.html"><button onclick="loadMore(0); disableButton(0); enableNextButton(1)" id="load-more-button-0" class="btn btn-secondary">64 -
+            <a href="./index.html"><button onclick="onloadGetData()" id="load-more-button-0" class="btn btn-secondary">
+                1-62
+            </button></a>
+            <a href="./pkm_64-171.html"><button onclick="loadMore2(1)" id="load-more-button-1" class="btn btn-secondary" >64 -
                 171</button></a>
-            <a href="./pkm_121-281.html"><button onclick="loadMore2(1) " id="load-more-button-1" class="btn btn-secondary" >121 -
-                281</button></a>
-            <a href="./pkm_all-pkm"><button onclick="loadAll(2)" id="load-more-button-3" class="btn btn-secondary" >load
+            <a href="./pkm_all-pkm.html"><button onclick="loadAll(2)" id="load-more-button-3" class="btn btn-secondary" >load
                 All</button></a>
         </div>
     </div>

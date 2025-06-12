@@ -155,6 +155,7 @@ footer {
 
 .spinner-overlay{
 height: calc(100vh - 350px);
+/* display: none; */
 }
 
 #overlay-content-container {
