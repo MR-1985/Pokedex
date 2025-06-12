@@ -5,7 +5,7 @@ function onloadGetData() {
 };
 
 //Basis URL mit allen Daten und Limitter
-const Basic_URL = "https://pokeapi.co/api/v2/pokemon?limit=34&offset=0"
+const Basic_URL = "https://pokeapi.co/api/v2/pokemon?limit=203&offset=0"
 
 //Array mit Möglichkeit alle Daten zu speichern, für weniger URL aufrufe
 let allPkm = [];
@@ -247,7 +247,7 @@ function renderTempForActivFilter(index, pkmIndex) {
 
 async function loadMore() {
     try {
-        const second_URL = "https://pokeapi.co/api/v2/pokemon?limit=74&offset=34"
+        const second_URL = "https://pokeapi.co/api/v2/pokemon?limit=203&offset=203"
         showSpinner();
         //Laden und Warten auf alle Daten aus der URL
         let response = await fetch(second_URL);
@@ -272,7 +272,7 @@ async function loadMore() {
 
 async function loadMore2() {
     try {
-        const second_URL = "https://pokeapi.co/api/v2/pokemon?limit=109&offset=76"
+        const second_URL = "https://pokeapi.co/api/v2/pokemon?limit=203&offset=406"
         showSpinner();
         //Laden und Warten auf alle Daten aus der URL
         let response = await fetch(second_URL);
@@ -294,7 +294,7 @@ async function loadMore2() {
 
 async function loadMore3() {
     try {
-        const second_URL = "https://pokeapi.co/api/v2/pokemon?limit=145&offset=111"
+        const second_URL = "https://pokeapi.co/api/v2/pokemon?limit=203&offset=609"
         showSpinner();
         //Laden und Warten auf alle Daten aus der URL
         let response = await fetch(second_URL);
@@ -316,7 +316,7 @@ async function loadMore3() {
 
 async function loadAll() {
     try {
-        const second_URL = "https://pokeapi.co/api/v2/pokemon?limit=1015&offset=0"
+        const second_URL = "https://pokeapi.co/api/v2/pokemon?limit=203&offset=812"
         showSpinner();
         //Laden und Warten auf alle Daten aus der URL
         let response = await fetch(second_URL);
