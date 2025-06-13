@@ -1,12 +1,3 @@
-//Bei Laden der Seite wird die Funktion ausgefüührt
-function onloadGetData() {
-    //in der Funktion wird eine Funktion aufgerufen, die alle Daten vorerst laden soll
-    loadAllPokemons();
-};
-
-//Basis URL mit allen Daten und Limitter
-const Basic_URL = "https://pokeapi.co/api/v2/pokemon?limit=203&offset=0"
-
 //Array mit Möglichkeit alle Daten zu speichern, für weniger URL aufrufe
 let allPkm = [];
 
@@ -22,42 +13,59 @@ function hideSpinner() {
     document.getElementById('content').classList.remove("d-none");
 };
 
+const limit = 20;
+const maxOffset = 1099;
+const urls = [];
+for (let offset = 0; offset <= maxOffset; offset += limit) {
+    urls.push(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
+}
+let currentIndex = 0;
+
 //laden der URL-Daten
-async function loadAllPokemons() {
-    showSpinner();
-    //Laden und Warten auf alle Daten aus der URL
-    let response = await fetch(Basic_URL);
-    //Variable erstellen die das JSON-Format des Inhaltes der URL speichert
-    let responseToJson = await response.json();
-    //Variable erstellen mit den "results" aus der JSON
-    let data = responseToJson.results;
-    //Aufruf zum Ausführen der Funktion zum Laden der Details
-    await loadPkmDetails(data);
-    hideSpinner();
-    //Aufruf zum Ausführen der Erstellung der Karten
-    renderPkmCard();
+async function loadPokemons() {
+    try {
+        showSpinner();
+        const url = urls[currentIndex];
+        currentIndex++; // für den nächsten Klick vorbereiten
+        //Laden und Warten auf alle Daten aus der URL
+        let response = await fetch(url);
+        //Variable erstellen die das JSON-Format des Inhaltes der URL speichert
+        let responseToJson = await response.json();
+        //Variable erstellen mit den "results" aus der JSON
+        let data = responseToJson.results;
+        console.log(data)
+        //Aufruf zum Ausführen der Funktion zum Laden der Details
+        await loadPkmDetails(data);
+        //Aufruf zum Ausführen der Erstellung der Karten
+        renderPkmCard();
+    } catch (error) {
+        console.error("Error loading Pokemon 36-75", error);
+    } finally {
+        // closeSpinnerOverlay();
+        hideSpinner();
+    }
 };
 
 //laden der einzelnen Details jedes PKM
 async function loadPkmDetails(data) {
-try{
-    //iterieren durch die "results" von der "data"
-    for (let index = 0; index < data.length; index++) {
-        const pkm = data[index];
-        //warten auf Details aus der "data"
-        let detailResponse = await fetch(pkm.url);
-        //Umwandeln der Details aus der "data" in JSON
-        let detailData = await detailResponse.json();
-        //Anzeige der Details für weiter eventuelle Details zum anzeigen
-        // console.log(detailData);
-        //laden der evolutionsbilder
-        let evoData = await loadEvoChain(detailData);
-        pushPokemon(detailData, evoData);
+    try {
+        //iterieren durch die "results" von der "data"
+        for (let index = 0; index < data.length; index++) {
+            const pkm = data[index];
+            //warten auf Details aus der "data"
+            let detailResponse = await fetch(pkm.url);
+            //Umwandeln der Details aus der "data" in JSON
+            let detailData = await detailResponse.json();
+            //Anzeige der Details für weiter eventuelle Details zum anzeigen
+            // console.log(detailData);
+            //laden der evolutionsbilder
+            let evoData = await loadEvoChain(detailData);
+            pushPokemon(detailData, evoData);
+        };
+    } catch (error) {
+        console.error("Error loading Pokemon Details", error);
+        return
     };
-}catch(error){
-    console.error("Error loading Pokemon Details",error);
-    return
-};
 };
 
 function pushPokemon(detailData, evoData) {
@@ -66,7 +74,7 @@ function pushPokemon(detailData, evoData) {
     allPkm.push({
         name: detailData.name,
         image: detailData.sprites.front_default,
-        id: detailData.order,
+        id: detailData.id,
         type: detailData.types,
         abilities: detailData.abilities,
         height: detailData.height,
@@ -99,11 +107,9 @@ async function traverseEvoChain(chain, evoImages) {
 
     try {
         if (!chain) return;
-
         const name = chain.species.name;
         const image = await getPokemonImage(name);
         evoImages.push({ name, image });
-
         // Nur die erste Evolution in jeder Stufe berücksichtigen (standard)
         if (chain.evolves_to.length > 0) {
             await traverseEvoChain(chain.evolves_to[0], evoImages);
@@ -237,102 +243,9 @@ function renderTempForActivFilter(index, pkmIndex) {
         case 1:
             document.getElementById("stats").innerHTML = statsTabTemp(pkmIndex);
             break;
-
         default:
             document.getElementById("evo").innerHTML = evoTabTemp(pkmIndex);
             break;
-    };
-
-};
-
-async function loadMore() {
-    try {
-        const second_URL = "https://pokeapi.co/api/v2/pokemon?limit=203&offset=203"
-        showSpinner();
-        //Laden und Warten auf alle Daten aus der URL
-        let response = await fetch(second_URL);
-        //Variable erstellen die das JSON-Format des Inhaltes der URL speichert
-        let responseToJson = await response.json();
-        //Variable erstellen mit den "results" aus der JSON
-        let data = responseToJson.results;
-        //Aufruf zum Ausführen der Funktion zum Laden der Details
-        await loadPkmDetails(data);
-        // closeSpinnerOverlay();
-        hideSpinner();
-
-        //Aufruf zum Ausführen der Erstellung der Karten
-        renderPkmCard();
-    } catch (error) {
-        console.error("Error loading Pokemon 36-75", error);
-        return
-    };
-};
-
-
-
-async function loadMore2() {
-    try {
-        const second_URL = "https://pokeapi.co/api/v2/pokemon?limit=203&offset=406"
-        showSpinner();
-        //Laden und Warten auf alle Daten aus der URL
-        let response = await fetch(second_URL);
-        //Variable erstellen die das JSON-Format des Inhaltes der URL speichert
-        let responseToJson = await response.json();
-        //Variable erstellen mit den "results" aus der JSON
-        let data = responseToJson.results;
-        //Aufruf zum Ausführen der Funktion zum Laden der Details
-        await loadPkmDetails(data);
-        // closeSpinnerOverlay();
-        hideSpinner();
-        //Aufruf zum Ausführen der Erstellung der Karten
-        renderPkmCard();
-    } catch (error) {
-        console.error("Error loading Pokemon 76-110", error);
-        return
-    };
-};
-
-async function loadMore3() {
-    try {
-        const second_URL = "https://pokeapi.co/api/v2/pokemon?limit=203&offset=609"
-        showSpinner();
-        //Laden und Warten auf alle Daten aus der URL
-        let response = await fetch(second_URL);
-        //Variable erstellen die das JSON-Format des Inhaltes der URL speichert
-        let responseToJson = await response.json();
-        //Variable erstellen mit den "results" aus der JSON
-        let data = responseToJson.results;
-        //Aufruf zum Ausführen der Funktion zum Laden der Details
-        await loadPkmDetails(data);
-        // closeSpinnerOverlay();
-        hideSpinner();
-        //Aufruf zum Ausführen der Erstellung der Karten
-        renderPkmCard();
-    } catch (error) {
-        console.error("Error loading Pokemon 111-145", error);
-        return
-    };
-};
-
-async function loadAll() {
-    try {
-        const second_URL = "https://pokeapi.co/api/v2/pokemon?limit=203&offset=812"
-        showSpinner();
-        //Laden und Warten auf alle Daten aus der URL
-        let response = await fetch(second_URL);
-        //Variable erstellen die das JSON-Format des Inhaltes der URL speichert
-        let responseToJson = await response.json();
-        //Variable erstellen mit den "results" aus der JSON
-        let data = responseToJson.results;
-        //Aufruf zum Ausführen der Funktion zum Laden der Details
-        await loadPkmDetails(data);
-        // closeSpinnerOverlay();
-        hideSpinner();
-        //Aufruf zum Ausführen der Erstellung der Karten
-        renderPkmCard();
-    } catch (error) {
-        console.error("Error loading all Pokemon:", error);
-        return
     };
 };
 

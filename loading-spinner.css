@@ -1,7 +1,7 @@
 .pokeball-spinner {
     /* display: none; */
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     position: relative;
     margin: 20px auto;
     animation: spin 1s linear infinite;
@@ -10,10 +10,10 @@
 }
 
 .pokeball {
-    width: 50vmin; /* Kleinere Viewport-Dimension */
-    min-width: 260px;
-    height: 50vmin; /* Quadratisch */
-    min-height: 260px;
+    width: 35vmin; /* Kleinere Viewport-Dimension */
+    min-width: 160px;
+    height: 35vmin; /* Quadratisch */
+    min-height: 160px;
     background: linear-gradient(to bottom, #ff0000 50%, #ffffff 50%);
     border-radius: 50%;
     position: relative;

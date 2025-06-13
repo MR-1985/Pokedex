@@ -9,13 +9,14 @@
     <link rel="stylesheet" href="./colors.css">
     <link rel="stylesheet" href="./scrollbar.css">
     <link rel="stylesheet" href="./loading-spinner.css">
+    <link rel="shortcut icon" href="./imgs/pokeball_PNG17-346131969.png" type="image/x-icon">
     <script src="./bootstrap-5.3.5-dist/js/bootstrap.js"></script>
     <script src="./templates.js"></script>
 
     <title>Pokedex</title>
 </head>
 
-<body onload="onloadGetData()">
+<body onload="loadPokemons()">
     <header onclick="closeOverlay()" id="header">
         <img onclick="closeOverlay()" class="headerImage" src="./imgs/headder.png" alt="">
     </header>
@@ -39,17 +40,10 @@
 
         </div>
         <div class="button-container" style="display: flex; justify-content: space-around;">
-            <a href="./pkm_301-423.html"><button onclick="loadMore(0); disableButton(0); enableNextButton(1)"
+            <button onclick="loadPokemons()"
                     id="load-more-button-0" class="btn btn-secondary">
-                    301 - 423
-                </button></a>
-            <a href="./pkm_425-731.html"><button onclick="loadMore2(1) " id="load-more-button-1"
-                    class="btn btn-secondary">
-                    425 - 731
-                </button></a>
-            <a href="./pkm_994-1099.html"><button onclick="loadAll(2)" id="load-more-button-3" class="btn btn-secondary">
-                    994 - 1099
-                </button></a>
+                    load next 20
+                </button>
         </div>
     </div>
     <footer id="footer">
