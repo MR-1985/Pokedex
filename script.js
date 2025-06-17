@@ -13,7 +13,7 @@ function hideSpinner() {
     document.getElementById('content').classList.remove("d-none");
 };
 
-const limit = 20;
+const limit = 6
 const maxOffset = 1099;
 const urls = [];
 for (let offset = 0; offset <= maxOffset; offset += limit) {
@@ -23,6 +23,7 @@ let currentIndex = 0;
 
 //laden der URL-Daten
 async function loadPokemons() {
+    
     try {
         showSpinner();
         const url = urls[currentIndex];
@@ -32,17 +33,18 @@ async function loadPokemons() {
         //Variable erstellen die das JSON-Format des Inhaltes der URL speichert
         let responseToJson = await response.json();
         //Variable erstellen mit den "results" aus der JSON
-        let data = responseToJson.results;
-        console.log(data)
+        let data = responseToJson.results;                                                                           console.log(data)
         //Aufruf zum Ausführen der Funktion zum Laden der Details
         await loadPkmDetails(data);
         //Aufruf zum Ausführen der Erstellung der Karten
         renderPkmCard();
+        // switchFooterPosition();
     } catch (error) {
         console.error("Error loading Pokemon 36-75", error);
     } finally {
         // closeSpinnerOverlay();
         hideSpinner();
+        
     }
 };
 
@@ -56,10 +58,11 @@ async function loadPkmDetails(data) {
             let detailResponse = await fetch(pkm.url);
             //Umwandeln der Details aus der "data" in JSON
             let detailData = await detailResponse.json();
+                                                                                console.log(detailData)
             //Anzeige der Details für weiter eventuelle Details zum anzeigen
-            // console.log(detailData);
             //laden der evolutionsbilder
             let evoData = await loadEvoChain(detailData);
+                                                                                // console.log(evoData);
             pushPokemon(detailData, evoData);
         };
     } catch (error) {
@@ -84,6 +87,8 @@ function pushPokemon(detailData, evoData) {
         evolutions: evoData
     });
 };
+
+
 
 async function loadEvoChain(detailData) {
     try {
