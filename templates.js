@@ -35,7 +35,7 @@ function renderPkmCardTemp(index, pkm) {
     `
 };
 
-function renderOverlayCardTemplate(index, pkm) {
+function renderOverlayCardTemplate(index, pkm, detailData) {
     const type1 = pkm.type[0]?.type.name || "unbekannt";
     const type2 = pkm.type[1]?.type.name || "";
 
@@ -76,7 +76,7 @@ function renderOverlayCardTemplate(index, pkm) {
             <div onclick="enableFilterTab(${index}, 1)" id="filter-tab-(2)" class="badge  border mt-1">
                 stats
             </div>
-            <div onclick="enableFilterTab(${index}, 2)" id="filter-tab-(3)" class="badge  border mt-1">
+            <div onclick="evoTabClicked(${index}, ${JSON.stringify(detailData)})" id="filter-tab-(3)" class="badge  border mt-1">
                 evo
             </div>
 
@@ -126,19 +126,27 @@ function statsTabTemp(index) {
 }
 
 function evoTabTemp(index) {
+    
+    showMiniSpinner();
     const pkm = allPkm[index];
     const evolutions = pkm.evolutions;
 
     if (!evolutions || evolutions.length === 0) {
         return `<p>${pkm.name} has no evolutions.</p>`;
     }
-
+    // hideMiniSpinner();
     return evolutions.map(evo => `
-        <div class="evo-container">
+        <div id="evo-mini-spinner" class="mini-spinner-ball">
+            
+        </div>
+        <div class="evo-container d-none" id="evo-container">
             <img src="${evo.image}" alt="${evo.name}" class="evo-img">
             <p>${evo.name}</p>
         </div>
     `).join('');
+
 }
+
+
 
 

@@ -7,13 +7,24 @@ function showSpinner() {
     document.getElementById('content').classList.add("d-none");
 };
 
+function showMiniSpinner(){
+
+
+
+};
+
 function hideSpinner() {
 
     document.getElementById('spinner-overlay').classList.add("d-none");
     document.getElementById('content').classList.remove("d-none");
 };
 
-const limit = 6
+function hideMiniSpinner(){
+
+
+};
+
+const limit = 30
 const maxOffset = 1099;
 const urls = [];
 for (let offset = 0; offset <= maxOffset; offset += limit) {
@@ -61,9 +72,8 @@ async function loadPkmDetails(data) {
                                                                                 console.log(detailData)
             //Anzeige der Details für weiter eventuelle Details zum anzeigen
             //laden der evolutionsbilder
-            let evoData = await loadEvoChain(detailData);
                                                                                 // console.log(evoData);
-            pushPokemon(detailData, evoData);
+            pushPokemon(detailData);
         };
     } catch (error) {
         console.error("Error loading Pokemon Details", error);
@@ -71,7 +81,7 @@ async function loadPkmDetails(data) {
     };
 };
 
-function pushPokemon(detailData, evoData) {
+function pushPokemon(detailData) {
 
     //Speichern der Details für weniger URL-Anfragen
     allPkm.push({
@@ -84,15 +94,20 @@ function pushPokemon(detailData, evoData) {
         weight: detailData.weight,
         base_experience: detailData.base_experience,
         stats: detailData.stats,
-        evolutions: evoData
+        species_url: detailData.species.url
     });
 };
 
+async function evoTabClicked(index) {
+    await enableFilterTab(index, 2);
+    const species_url = allPkm[index].species_url;
+    await loadEvoChain(species_url, index);
+}
 
 
-async function loadEvoChain(detailData) {
+async function loadEvoChain(species_url, index) {
     try {
-        let speciesResponse = await fetch(detailData.species.url);
+        let speciesResponse = await fetch(species_url);
         let speciesData = await speciesResponse.json();
         // console.log(speciesData);
         let chainResponse = await fetch(speciesData.evolution_chain.url)
@@ -100,6 +115,8 @@ async function loadEvoChain(detailData) {
         // console.log(evoData)
         let evoImages = [];
         await traverseEvoChain(evoData.chain, evoImages);
+        allPkm[index].evolutions = evoImages;
+        document.getElementById("evo").innerHTML = evoTabTemp(index);
         // console.log(evoImages)
         return evoImages;
     } catch (error) {
