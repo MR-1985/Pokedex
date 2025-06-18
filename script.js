@@ -24,7 +24,7 @@ function hideMiniSpinner(){
 
 };
 
-const limit = 30
+const limit = 20
 const maxOffset = 1099;
 const urls = [];
 for (let offset = 0; offset <= maxOffset; offset += limit) {
