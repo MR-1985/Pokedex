@@ -101,6 +101,7 @@ function pushPokemon(detailData) {
 async function evoTabClicked(index) {
     await enableFilterTab(index, 2);
     const species_url = allPkm[index].species_url;
+    showMiniSpinner();
     await loadEvoChain(species_url, index);
 }
 
@@ -119,6 +120,7 @@ async function loadEvoChain(species_url, index) {
         document.getElementById("evo").innerHTML = evoTabTemp(index);
         // console.log(evoImages)
         return evoImages;
+        hideMiniSpinner();
     } catch (error) {
         console.error("Error loading Evo Chain", error);
         return

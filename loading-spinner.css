@@ -58,25 +58,27 @@
     }
 }
 
-/* #evo-mini-spinner{
-    width: 1px;
-    height: 1px;
+#evo-mini-spinner{
+    width: 30px;
+    height: 30px;
     position: relative;
     margin:  auto;
     animation: spin 1s linear infinite;
     z-index: 1001;
     overflow-y:auto;
-} */
 
-.mini-spinner-ball{
-    width: 5vmin; /* Kleinere Viewport-Dimension */
-    min-width: 4px;
-    height: 5vmin; /* Quadratisch */
-    min-height: 5px;
+    /* width: 5vmin; Kleinere Viewport-Dimension */
+    /* min-width: 4px; */
+    /* height: 5vmin; Quadratisch */
+    /* min-height: 5px; */
     background: linear-gradient(to bottom, #ff0000 50%, #ffffff 50%);
     border-radius: 50%;
-    position: relative;
-    top: 5px;
+    /* position: relative; */
+    /* top: 5px; */
     border: 1px solid #000000;
     box-sizing: border-box;
+}
+
+.mini-spinner-ball{
+    
 }

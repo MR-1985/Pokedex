@@ -127,19 +127,18 @@ function statsTabTemp(index) {
 
 function evoTabTemp(index) {
     
-    showMiniSpinner();
     const pkm = allPkm[index];
     const evolutions = pkm.evolutions;
 
     if (!evolutions || evolutions.length === 0) {
         return `<p>${pkm.name} has no evolutions.</p>`;
     }
-    // hideMiniSpinner();
     return evolutions.map(evo => `
+        
         <div id="evo-mini-spinner" class="mini-spinner-ball">
             
         </div>
-        <div class="evo-container d-none" id="evo-container">
+        <div class="d-none evo-container" id="evo-container">
             <img src="${evo.image}" alt="${evo.name}" class="evo-img">
             <p>${evo.name}</p>
         </div>
