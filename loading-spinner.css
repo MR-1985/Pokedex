@@ -6,13 +6,15 @@
     margin: 20px auto;
     animation: spin 1s linear infinite;
     z-index: 1001;
-    overflow-y:auto;
+    overflow-y: auto;
 }
 
 .pokeball {
-    width: 35vmin; /* Kleinere Viewport-Dimension */
+    width: 35vmin;
+    /* Kleinere Viewport-Dimension */
     min-width: 160px;
-    height: 35vmin; /* Quadratisch */
+    height: 35vmin;
+    /* Quadratisch */
     min-height: 160px;
     background: linear-gradient(to bottom, #ff0000 50%, #ffffff 50%);
     border-radius: 50%;
@@ -27,7 +29,8 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 5vmin; /* Proportional */
+    width: 5vmin;
+    /* Proportional */
     min-width: 20px;
     height: 5vmin;
     min-height: 20px;
@@ -43,7 +46,8 @@
     top: 50%;
     left: 0;
     right: 0;
-    height: 1.5vmin; /* Proportional */
+    height: 1.5vmin;
+    /* Proportional */
     min-height: 6px;
     background: #000000;
     transform: translateY(-50%);
@@ -53,32 +57,22 @@
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
 }
 
-#evo-mini-spinner{
-    width: 30px;
-    height: 30px;
+.mini-spinner-ball {
+    width: 50px;
+    height: 50px;
     position: relative;
-    margin:  auto;
+    top: 95px;
+    left: 50px;
     animation: spin 1s linear infinite;
     z-index: 1001;
-    overflow-y:auto;
-
-    /* width: 5vmin; Kleinere Viewport-Dimension */
-    /* min-width: 4px; */
-    /* height: 5vmin; Quadratisch */
-    /* min-height: 5px; */
     background: linear-gradient(to bottom, #ff0000 50%, #ffffff 50%);
     border-radius: 50%;
-    /* position: relative; */
-    /* top: 5px; */
     border: 1px solid #000000;
     box-sizing: border-box;
-}
-
-.mini-spinner-ball{
-    
 }

@@ -5,8 +5,7 @@ function renderPkmCardTemp(index, pkm) {
     let type2 = pkm.type[1]?.type.name || "";
     //das eigentliche HTML wird hier erschaffen
     return `
-<div onclick="visibilityOverlay(${index})" id="poke-card-${index}" class="card type-${type1}">
-
+<div onclick="visibilityOverlay(${index})" id="poke-card-${index}" class="card pokemon-card type-${type1}">
     <div id="pkm-name-id-${index}">
         <div class="pkm-name">
             <div id="id">
@@ -18,18 +17,14 @@ function renderPkmCardTemp(index, pkm) {
             </div>
         </div>
     </div>
-
     <div id="pkm-img-container">
         <img id="pkm-cards" class="pkm-imgs pkm-cards" src="${pkm.image}"></img>
     </div>
-
     <div id="pkm-atrb">
         <div class="type-badge type-${type1}">
             ${type1}
         </div>
-        
-        ${type2 ? `<div class="type-badge type-${type2}">${type2}</div>` : ""}
-        
+        ${type2 ? `<div class="type-badge type-${type2}">${type2}</div>` : ""}  
     </div>
 </div>
     `
@@ -38,64 +33,52 @@ function renderPkmCardTemp(index, pkm) {
 function renderOverlayCardTemplate(index, pkm, detailData) {
     const type1 = pkm.type[0]?.type.name || "unbekannt";
     const type2 = pkm.type[1]?.type.name || "";
-
     return `
     <div onclick="event.stopPropagation()" id="poke-card-${index}" class="rounded-4 mt-5 h-600 type-${type1}">
-
         <div id="pkm-name-id-${index}" class="pkm-name-id-overlay-card">
             <div class="pkm-name-overlay-card">
                 <div class="pkm-id-overlay-card">
                     #${pkm.id}
                 </div>
-
                 <div class="pkm-name-overlay-card">
                   ${pkm.name}
                 </div>
             </div>
         </div>
-
         <div id="pkm-img-container">
+            <button class="btn btn-left">
+                <img class="arrow-left" src="./imgs/doodle-1388119_1280.png" alt="arrow left">
+            </button>
             <img id="imgInOverlayCard" class="pkm-imgs no-hover" src="${pkm.image}"></img>
+            <button class="btn btn-right">
+                <img class="arrow-right" src="./imgs/doodle-1388119_1280.png" alt="arrow right">
+            </button>
         </div>
-
         <div id="pkm-atrb">
             <div class="type-badge type-${type1}">
                 ${type1}
             </div>
-        
             ${type2 ? `<div class="type-badge type-${type2}">${type2}</div>` : ""}
-        
         </div>
-
-        
         <div id="filter-container" class="d-flex justify-content-between ">
-
             <div onclick="enableFilterTab(${index}, 0)" id="filter-tab-(1)" class="badge  border mt-1">
                 main
             </div>
             <div onclick="enableFilterTab(${index}, 1)" id="filter-tab-(2)" class="badge  border mt-1">
                 stats
             </div>
-            <div onclick="evoTabClicked(${index}, ${JSON.stringify(detailData)})" id="filter-tab-(3)" class="badge  border mt-1">
+            <div onclick="evoTabClicked(${index}, 2, ${JSON.stringify(detailData)})" id="filter-tab-(3)" class="badge  border mt-1">
                 evo
             </div>
-
         </div>
-
         <div>
-
-            <div id="main" class="">
-                
+            <div id="main" class="">      
             </div>
-            <div id="stats" class="">
-                
+            <div id="stats" class="">     
             </div>
-            <div id="evo" class="">
-                
+            <div id="evo" class="">   
             </div>
-
-        </div>
-                
+        </div>   
     </div>
     `
 };
@@ -126,26 +109,20 @@ function statsTabTemp(index) {
 }
 
 function evoTabTemp(index) {
-    
+
     const pkm = allPkm[index];
     const evolutions = pkm.evolutions;
-
-    if (!evolutions || evolutions.length === 0) {
-        return `<p>${pkm.name} has no evolutions.</p>`;
+    if (!evolutions) {
+        return `<div id="evo-mini-spinner" class="mini-spinner-ball ">    
+        </div>`;
+    }
+    if (evolutions.length === 0) {
+        return `<p>${pkm.name} has no evolutions.</p>`;  // Wirklich KEINE vorhanden
     }
     return evolutions.map(evo => `
-        
-        <div id="evo-mini-spinner" class="mini-spinner-ball">
-            
-        </div>
-        <div class="d-none evo-container" id="evo-container">
+        <div class=" evo-container" id="evo-container">
             <img src="${evo.image}" alt="${evo.name}" class="evo-img">
             <p>${evo.name}</p>
         </div>
     `).join('');
-
 }
-
-
-
-

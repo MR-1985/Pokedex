@@ -17,6 +17,9 @@
 </head>
 
 <body onload="loadPokemons()">
+    <div class="input-container">
+        <input oninput="findPokemon()" id="input" class="input" type="text" min="3" placeholder="search, pokemon" title="type letters to filter pokemons" >
+    </div>
     <header onclick="closeOverlay()" id="header">
         <img onclick="closeOverlay()" class="headerImage" src="./imgs/headder.png" alt="">
     </header>
@@ -37,14 +40,13 @@
     <div id="second_body">
 
         <div id="content">
-   
+
         </div>
 
         <div class="button-container">
-            <button onclick="loadPokemons();"
-                    id="load-more-button-0" class="btn btn-secondary">
-                    load more Pokemon
-                </button>
+            <button onclick="loadPokemons();" id="load-more-button" class="btn btn-secondary">
+                load more Pokemon
+            </button>
         </div>
     </div>
     <footer id="footer" class="footer">

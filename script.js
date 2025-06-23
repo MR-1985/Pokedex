@@ -7,22 +7,19 @@ function showSpinner() {
     document.getElementById('content').classList.add("d-none");
 };
 
-function showMiniSpinner(){
-
-
-
-};
-
 function hideSpinner() {
 
     document.getElementById('spinner-overlay').classList.add("d-none");
     document.getElementById('content').classList.remove("d-none");
 };
 
-function hideMiniSpinner(){
+function hideLoadButton() {
+    document.getElementById("load-more-button").classList.add("d-none");
+}
 
-
-};
+function showLoadButton() {
+    document.getElementById("load-more-button").classList.remove("d-none");
+}
 
 const limit = 20
 const maxOffset = 1099;
@@ -34,8 +31,9 @@ let currentIndex = 0;
 
 //laden der URL-Daten
 async function loadPokemons() {
-    
+
     try {
+        hideLoadButton();
         showSpinner();
         const url = urls[currentIndex];
         currentIndex++; // für den nächsten Klick vorbereiten
@@ -44,18 +42,18 @@ async function loadPokemons() {
         //Variable erstellen die das JSON-Format des Inhaltes der URL speichert
         let responseToJson = await response.json();
         //Variable erstellen mit den "results" aus der JSON
-        let data = responseToJson.results;                                                                           console.log(data)
+        let data = responseToJson.results; console.log(data)
         //Aufruf zum Ausführen der Funktion zum Laden der Details
         await loadPkmDetails(data);
         //Aufruf zum Ausführen der Erstellung der Karten
         renderPkmCard();
         // switchFooterPosition();
     } catch (error) {
-        console.error("Error loading Pokemon 36-75", error);
+        console.error("Error loading Pokemon", error);
     } finally {
-        // closeSpinnerOverlay();
         hideSpinner();
-        
+        showLoadButton();
+
     }
 };
 
@@ -69,10 +67,10 @@ async function loadPkmDetails(data) {
             let detailResponse = await fetch(pkm.url);
             //Umwandeln der Details aus der "data" in JSON
             let detailData = await detailResponse.json();
-                                                                                console.log(detailData)
+            console.log(detailData)
             //Anzeige der Details für weiter eventuelle Details zum anzeigen
             //laden der evolutionsbilder
-                                                                                // console.log(evoData);
+            // console.log(evoData);
             pushPokemon(detailData);
         };
     } catch (error) {
@@ -101,7 +99,6 @@ function pushPokemon(detailData) {
 async function evoTabClicked(index) {
     await enableFilterTab(index, 2);
     const species_url = allPkm[index].species_url;
-    showMiniSpinner();
     await loadEvoChain(species_url, index);
 }
 
@@ -110,17 +107,13 @@ async function loadEvoChain(species_url, index) {
     try {
         let speciesResponse = await fetch(species_url);
         let speciesData = await speciesResponse.json();
-        // console.log(speciesData);
         let chainResponse = await fetch(speciesData.evolution_chain.url)
         let evoData = await chainResponse.json();
-        // console.log(evoData)
         let evoImages = [];
         await traverseEvoChain(evoData.chain, evoImages);
         allPkm[index].evolutions = evoImages;
         document.getElementById("evo").innerHTML = evoTabTemp(index);
-        // console.log(evoImages)
         return evoImages;
-        hideMiniSpinner();
     } catch (error) {
         console.error("Error loading Evo Chain", error);
         return
@@ -282,3 +275,18 @@ function enableNextButton(index) {
     // enabled den nächsten Button
     document.getElementById(`load-more-button-${index}`).disabled = false;
 };
+
+function findPokemon() {
+    const searchValue = document.getElementById('input').value.toLowerCase();
+    const cards = document.querySelectorAll('#content .pokemon-card');
+    cards.forEach(card => {
+        const nameElement = card.querySelector('#name');
+        const name = nameElement.textContent.toLowerCase();
+
+        if (name.includes(searchValue)) {
+            card.classList.remove('d-none');
+        } else {
+            card.classList.add('d-none');
+        }
+    });
+}
