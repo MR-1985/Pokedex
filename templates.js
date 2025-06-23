@@ -46,11 +46,11 @@ function renderOverlayCardTemplate(index, pkm, detailData) {
             </div>
         </div>
         <div id="pkm-img-container">
-            <button class="btn btn-left">
+            <button onclick="showPreviousPokemon()" class="btn btn-left">
                 <img class="arrow-left" src="./imgs/doodle-1388119_1280.png" alt="arrow left">
             </button>
             <img id="imgInOverlayCard" class="pkm-imgs no-hover" src="${pkm.image}"></img>
-            <button class="btn btn-right">
+            <button onclick="showNextPokemon()" class="btn btn-right">
                 <img class="arrow-right" src="./imgs/doodle-1388119_1280.png" alt="arrow right">
             </button>
         </div>
