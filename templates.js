@@ -108,6 +108,7 @@ function statsTabTemp(index) {
     return statsForStatsTab;
 }
 
+
 function evoTabTemp(index) {
 
     const pkm = allPkm[index];

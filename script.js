@@ -293,7 +293,10 @@ function findPokemon() {
 
 function showPreviousPokemon(){
     
+    
 }
+
 function showNextPokemon(){
+    
     
 }

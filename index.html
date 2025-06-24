@@ -17,10 +17,10 @@
 </head>
 
 <body onload="loadPokemons()">
-    <div class="input-container">
-        <input oninput="findPokemon()" id="input" class="input" type="text" min="3" placeholder="search, pokemon" title="type letters to filter pokemons" >
-    </div>
     <header onclick="closeOverlay()" id="header">
+        <div class="input-container">
+            <input oninput="findPokemon()" id="input" class="input" type="text" min="3" placeholder="search, pokemon" title="type letters to filter pokemons" >
+        </div>
         <img onclick="closeOverlay()" class="headerImage" src="./imgs/headder.png" alt="">
     </header>
 
