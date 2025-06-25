@@ -30,7 +30,7 @@ function renderPkmCardTemp(index, pkm) {
     `
 };
 
-function renderOverlayCardTemplate(index, pkm, detailData) {
+function renderOverlayCardTemplate(index, pkm) {
     const type1 = pkm.type[0]?.type.name || "unbekannt";
     const type2 = pkm.type[1]?.type.name || "";
     return `
@@ -46,11 +46,11 @@ function renderOverlayCardTemplate(index, pkm, detailData) {
             </div>
         </div>
         <div id="pkm-img-container">
-            <button onclick="showPreviousPokemon()" class="btn btn-left">
+            <button onclick="showPreviousPokemon(${index})" class="btn btn-left">
                 <img class="arrow-left" src="./imgs/doodle-1388119_1280.png" alt="arrow left">
             </button>
             <img id="imgInOverlayCard" class="pkm-imgs no-hover" src="${pkm.image}"></img>
-            <button onclick="showNextPokemon()" class="btn btn-right">
+            <button onclick="showNextPokemon(${index})" class="btn btn-right">
                 <img class="arrow-right" src="./imgs/doodle-1388119_1280.png" alt="arrow right">
             </button>
         </div>
@@ -67,7 +67,7 @@ function renderOverlayCardTemplate(index, pkm, detailData) {
             <div onclick="enableFilterTab(${index}, 1)" id="filter-tab-(2)" class="badge  border mt-1">
                 stats
             </div>
-            <div onclick="evoTabClicked(${index}, 2, ${JSON.stringify(detailData)})" id="filter-tab-(3)" class="badge  border mt-1">
+            <div onclick="evoTabClicked(${index}, 2)" id="filter-tab-(3)" class="badge  border mt-1">
                 evo
             </div>
         </div>
@@ -109,21 +109,52 @@ function statsTabTemp(index) {
 }
 
 
-function evoTabTemp(index) {
+// function evoTabTemp(index) {
 
+//     const pkm = allPkm[index];
+//     const evolutions = pkm.evolutions;
+//     if (!evolutions) {
+//         return `<div id="evo-mini-spinner" class="mini-spinner-ball ">    
+//         </div>`;
+//     }
+//     if (evolutions.length === 0) {
+//         return `<p>${pkm.name} has no evolutions.</p>`;  // Wirklich KEINE vorhanden
+//     }
+//     return evolutions.map(evo => `
+//         <div class=" evo-container" id="evo-container">
+//             <img src="${evo.image}" alt="${evo.name}" class="evo-img">
+//             <p>${evo.name}</p>
+//         </div>
+//     `).join('');
+// }
+
+function evoTabTemp(index) {
     const pkm = allPkm[index];
     const evolutions = pkm.evolutions;
+
     if (!evolutions) {
-        return `<div id="evo-mini-spinner" class="mini-spinner-ball ">    
+        return `<div id="evo-mini-spinner" class="mini-spinner-ball">    
         </div>`;
     }
+
     if (evolutions.length === 0) {
-        return `<p>${pkm.name} has no evolutions.</p>`;  // Wirklich KEINE vorhanden
+        return `<p>${pkm.name} has no evolutions.</p>`;
     }
-    return evolutions.map(evo => `
-        <div class=" evo-container" id="evo-container">
-            <img src="${evo.image}" alt="${evo.name}" class="evo-img">
-            <p>${evo.name}</p>
-        </div>
-    `).join('');
+
+    return evolutions.map(evo => {
+        // Versuche, den Index des Evolutionspokémon im allPkm-Array zu finden
+        const evoIndex = allPkm.findIndex(i => i.name === evo.name);
+
+        // Wenn gefunden, onclick setzen – sonst kein Handler
+        const onclickAttr = evoIndex !== -1
+            ? `onclick="renderOverlayCard(${evoIndex})"`
+            : "";
+
+        return `
+            <div class="evo-container" id="evo-container">
+                <img src="${evo.image}" alt="${evo.name}" class="evo-img" ${onclickAttr}>
+                <p>${evo.name}</p>
+            </div>
+        `;
+    }).join('');
 }

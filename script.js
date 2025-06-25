@@ -1,6 +1,6 @@
 //Array mit Möglichkeit alle Daten zu speichern, für weniger URL aufrufe
 let allPkm = [];
-
+let currentPokemonIndex = 0;
 function showSpinner() {
 
     document.getElementById('spinner-overlay').classList.remove("d-none");
@@ -291,12 +291,20 @@ function findPokemon() {
     });
 }
 
-function showPreviousPokemon(){
-    
-    
+function showPreviousPokemon(currentPokemonIndex) {
+    if (currentPokemonIndex > 0){
+        currentPokemonIndex--;
+    }else{
+        currentPokemonIndex = allPkm.length - 1;    
+    }
+    renderOverlayCard(currentPokemonIndex)
 }
 
-function showNextPokemon(){
-    
-    
+function showNextPokemon(currentPokemonIndex) {
+    if (currentPokemonIndex < allPkm.length - 1){
+        currentPokemonIndex++;
+    }else{
+        currentPokemonIndex = 0;    
+    }
+    renderOverlayCard(currentPokemonIndex);
 }
