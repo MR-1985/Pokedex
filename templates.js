@@ -146,6 +146,7 @@ function evoTabTemp(index) {
         const evoIndex = allPkm.findIndex(i => i.name === evo.name);
 
         // Wenn gefunden, onclick setzen – sonst kein Handler
+        // ternäre Operator == if/else
         const onclickAttr = evoIndex !== -1
             ? `onclick="renderOverlayCard(${evoIndex})"`
             : "";
