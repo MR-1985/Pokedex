@@ -1,9 +1,6 @@
 function renderPkmCardTemp(index, pkm) {
-    //Festlegen der Variablen, die eine Eigenschafft wiedergeben
-
     let type1 = pkm.type[0]?.type.name || "unbekannt";
     let type2 = pkm.type[1]?.type.name || "";
-    //das eigentliche HTML wird hier erschaffen
     return `
 <div onclick="visibilityOverlay(${index})" id="poke-card-${index}" class="card pokemon-card type-${type1}">
     <div id="pkm-name-id-${index}">
@@ -85,9 +82,6 @@ function renderOverlayCardTemplate(index, pkm) {
 
 function mainTabTemp(index) {
     const pkm = allPkm[index];
-    //.map durchsucht alle objekte im Array. a = Platzhalter und wird zu allen Namen des Objektes ability.
-    //.join schreibt alles als Text in den p-tag. 
-    //(", ") trennt die Wörter mit einem Komma
     return `   
     <p>Abilities: ${pkm.abilities.map(a => a.ability.name).join(', ')}</p>
         <p>Height: ${pkm.height}</p>
@@ -98,59 +92,29 @@ function mainTabTemp(index) {
 
 function statsTabTemp(index) {
     const pkm = allPkm[index];
-
     const statsForStatsTab = pkm.stats.map(statObj => {
         const statName = statObj.stat.name;
         const baseStat = statObj.base_stat;
         return `<p>${statName}: ${baseStat}</p>`;
     }).join('');
-
     return statsForStatsTab;
 }
-
-
-// function evoTabTemp(index) {
-
-//     const pkm = allPkm[index];
-//     const evolutions = pkm.evolutions;
-//     if (!evolutions) {
-//         return `<div id="evo-mini-spinner" class="mini-spinner-ball ">    
-//         </div>`;
-//     }
-//     if (evolutions.length === 0) {
-//         return `<p>${pkm.name} has no evolutions.</p>`;  // Wirklich KEINE vorhanden
-//     }
-//     return evolutions.map(evo => `
-//         <div class=" evo-container" id="evo-container">
-//             <img src="${evo.image}" alt="${evo.name}" class="evo-img">
-//             <p>${evo.name}</p>
-//         </div>
-//     `).join('');
-// }
 
 function evoTabTemp(index) {
     const pkm = allPkm[index];
     const evolutions = pkm.evolutions;
-
     if (!evolutions) {
         return `<div id="evo-mini-spinner" class="mini-spinner-ball">    
         </div>`;
     }
-
     if (evolutions.length === 0) {
         return `<p>${pkm.name} has no evolutions.</p>`;
     }
-
     return evolutions.map(evo => {
-        // Versuche, den Index des Evolutionspokémon im allPkm-Array zu finden
         const evoIndex = allPkm.findIndex(i => i.name === evo.name);
-
-        // Wenn gefunden, onclick setzen – sonst kein Handler
-        // ternäre Operator == if/else
         const onclickAttr = evoIndex !== -1
             ? `onclick="renderOverlayCard(${evoIndex})"`
             : "";
-
         return `
             <div class="evo-container" id="evo-container">
                 <img src="${evo.image}" alt="${evo.name}" class="evo-img" ${onclickAttr}>

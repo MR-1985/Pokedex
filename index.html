@@ -16,10 +16,11 @@
     <title>Pokedex</title>
 </head>
 
-<body onload="loadPokemons()">
+<body onload="setOffset(),loadPokemons();">
     <header onclick="closeOverlay()" id="header">
         <div class="input-container">
-            <input oninput="findPokemon()" id="input" class="input" type="text" min="3" placeholder="search, pokemon" title="type letters to filter pokemons" >
+            <input onkeyup="findPokemon()" id="input" class="input" type="text" min="3" placeholder="search, pokemon"
+                title="type letters to filter pokemons">
         </div>
         <img onclick="closeOverlay()" class="headerImage" src="./imgs/headder.png" alt="">
     </header>
@@ -29,18 +30,16 @@
         </div>
     </div>
 
-
     <div onclick="closeOverlay()" id="overlay" class="d-none">
         <div id="overlay-content-container">
 
         </div>
     </div>
 
-
     <div id="second_body">
 
         <div id="content">
-
+            
         </div>
 
         <div class="button-container">
@@ -52,7 +51,6 @@
     <footer id="footer" class="footer">
         <img class="footerImage" src="./imgs/pokeapi_256.png" alt="">
     </footer>
-
 
     <script src="./script.js" defer></script>
     <script src="./templates.js" defer></script>
