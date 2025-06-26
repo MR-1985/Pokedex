@@ -9,13 +9,13 @@ function renderPkmCardTemp(index, pkm) {
                 #${pkm.id}
             </div>
 
-            <div id="name">
+            <div id="pkm-name" class="name">
               ${pkm.name}
             </div>
         </div>
     </div>
     <div id="pkm-img-container">
-        <img id="pkm-cards" class="pkm-imgs pkm-cards" src="${pkm.image}"></img>
+        <img id="pkm-cards" class="pkm-imgs pkm-cards" src="${pkm.image}">
     </div>
     <div id="pkm-atrb">
         <div class="type-badge type-${type1}">
@@ -46,7 +46,7 @@ function renderOverlayCardTemplate(index, pkm) {
             <button onclick="showPreviousPokemon(${index})" class="btn btn-left">
                 <img class="arrow-left" src="./imgs/doodle-1388119_1280.png" alt="arrow left">
             </button>
-            <img id="imgInOverlayCard" class="pkm-imgs no-hover" src="${pkm.image}"></img>
+            <img id="imgInOverlayCard" class="pkm-imgs no-hover" src="${pkm.image}">
             <button onclick="showNextPokemon(${index})" class="btn btn-right">
                 <img class="arrow-right" src="./imgs/doodle-1388119_1280.png" alt="arrow right">
             </button>
@@ -58,13 +58,13 @@ function renderOverlayCardTemplate(index, pkm) {
             ${type2 ? `<div class="type-badge type-${type2}">${type2}</div>` : ""}
         </div>
         <div id="filter-container" class="d-flex justify-content-between ">
-            <div onclick="enableFilterTab(${index}, 0)" id="filter-tab-(1)" class="badge  border mt-1">
+            <div onclick="enableFilterTab(${index}, 0)" id="filter-tab-1" class="badge  border mt-1">
                 main
             </div>
-            <div onclick="enableFilterTab(${index}, 1)" id="filter-tab-(2)" class="badge  border mt-1">
+            <div onclick="enableFilterTab(${index}, 1)" id="filter-tab-2" class="badge  border mt-1">
                 stats
             </div>
-            <div onclick="evoTabClicked(${index}, 2)" id="filter-tab-(3)" class="badge  border mt-1">
+            <div onclick="evoTabClicked(${index}, 2)" id="filter-tab-3" class="badge  border mt-1">
                 evo
             </div>
         </div>
@@ -103,21 +103,20 @@ function statsTabTemp(index) {
 function evoTabTemp(index) {
     const pkm = allPkm[index];
     const evolutions = pkm.evolutions;
+
     if (!evolutions) {
-        return `<div id="evo-mini-spinner" class="mini-spinner-ball">    
-        </div>`;
+        return `<div id="evo-mini-spinner" class="mini-spinner-ball"></div>`;
     }
+
     if (evolutions.length === 0) {
         return `<p>${pkm.name} has no evolutions.</p>`;
     }
+
     return evolutions.map(evo => {
-        const evoIndex = allPkm.findIndex(i => i.name === evo.name);
-        const onclickAttr = evoIndex !== -1
-            ? `onclick="renderOverlayCard(${evoIndex})"`
-            : "";
         return `
             <div class="evo-container" id="evo-container">
-                <img src="${evo.image}" alt="${evo.name}" class="evo-img" ${onclickAttr}>
+                <img src="${evo.image}" alt="${evo.name}" class="evo-img"
+                     onclick="openFromEvo('${evo.name}')">
                 <p>${evo.name}</p>
             </div>
         `;

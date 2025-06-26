@@ -123,7 +123,7 @@ async function getPokemonImage(pokeName) {
         let data = await response.json();
         return data.sprites.front_default
     } catch (error) {
-        console.error("Error loading image for ${pokeName}:", error);
+        console.error(`Error loading image for ${pokeName}:`, error);
         return
     };
 };
@@ -169,20 +169,36 @@ function closeOverlay() {
     };
 };
 
+// function visibilityOverlay(index) {
+//     currentPokemonIndex = index;
+//     const overlay = document.getElementById("overlay");
+//     const contentRef = document.getElementById("content");
+//     const isOverlayNotVisible = overlay.classList.contains("d-none"); //Overlay ist unsichtbar durch d-none
+//     if (isOverlayNotVisible) {
+//         overlay.classList.remove("d-none");
+//         contentRef.classList.add("d-none");
+//         renderOverlayCard(index);
+//         enableFilterTab(index);
+//     } else {
+//         contentRef.classList.remove("d-none");
+//         overlay.classList.add("d-none");
+//     };
+// };
+
 function visibilityOverlay(index) {
+    currentPokemonIndex = index;
     const overlay = document.getElementById("overlay");
     const contentRef = document.getElementById("content");
-    const isOverlayNotVisible = overlay.classList.contains("d-none"); //Overlay ist unsichtbar durch d-none
+    const isOverlayNotVisible = overlay.classList.contains("d-none");
+
     if (isOverlayNotVisible) {
         overlay.classList.remove("d-none");
         contentRef.classList.add("d-none");
-        renderOverlayCard(index);
-        enableFilterTab(index);
-    } else {
-        contentRef.classList.remove("d-none");
-        overlay.classList.add("d-none");
-    };
-};
+    }
+
+    renderOverlayCard(index);
+    enableFilterTab(index);
+}
 
 function renderOverlayCard(index) {
     const pkm = allPkm[index];
@@ -199,7 +215,7 @@ function getFilters() {
     ];
 };
 
-function enableFilterTab(pkmIndex, filterNumber) {
+function enableFilterTab(pkmIndex, filterNumber = 0) {
     const filters = getFilters(); //alle Filter sind nun in der Variable Filters drin
     filters.forEach((filter, index) => {
         const isActivFilter = index === filterNumber;
@@ -235,33 +251,49 @@ function enableNextButton(index) {
 };
 
 function findPokemon() {
-    const searchValue = document.getElementById('input').value.toLowerCase();
-    const cards = document.querySelectorAll('#content .pokemon-card');
-    cards.forEach(card => {
-        const nameElement = card.querySelector('#name');
-        const name = nameElement.textContent.toLowerCase();
-        if (name.includes(searchValue)) {
-            // card.classList.remove('d-none');
-        } else {
-            card.classList.add('d-none');
-        }
+    const searchValue = document.getElementById('input').value.toLowerCase().trim();
+    const contentRef = document.getElementById("content");
+    contentRef.innerHTML = "";
+    let filteredPkmWithIndex = allPkm
+        .map((pkm, index) => ({ pkm, index })).filter(item => item.pkm.name.startsWith(searchValue));
+    if (filteredPkmWithIndex.length === 0) {
+        alert("No Pokémon found with this letter combination.");
+        document.getElementById('input').value = "";
+        findPokemon();
+        return;
+    }
+    filteredPkmWithIndex.forEach(({ pkm, index }) => {
+        contentRef.innerHTML += renderPkmCardTemp(index, pkm);
     });
+    scalePkmCards();
 }
 
-function showPreviousPokemon(currentPokemonIndex) {
+function showPreviousPokemon() {
     if (currentPokemonIndex > 0) {
         currentPokemonIndex--;
     } else {
         currentPokemonIndex = allPkm.length - 1;
     }
     renderOverlayCard(currentPokemonIndex)
+    enableFilterTab(currentPokemonIndex)
 }
 
-function showNextPokemon(currentPokemonIndex) {
+function showNextPokemon() {
     if (currentPokemonIndex < allPkm.length - 1) {
         currentPokemonIndex++;
     } else {
         currentPokemonIndex = 0;
     }
     renderOverlayCard(currentPokemonIndex);
+    enableFilterTab(currentPokemonIndex)
+}
+
+function openFromEvo(pokeName) {
+    const index = allPkm.findIndex(pkm => pkm.name === pokeName);
+    if (index !== -1) {
+        currentPokemonIndex = index;
+        visibilityOverlay(index);
+    } else {
+        console.error(`Pokémon ${pokeName} nicht im allPkm-Array gefunden.`);
+    }
 }
