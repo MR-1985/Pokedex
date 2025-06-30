@@ -1,5 +1,4 @@
 .pokeball-spinner {
-    /* display: none; */
     width: 40px;
     height: 40px;
     position: relative;
@@ -11,10 +10,8 @@
 
 .pokeball {
     width: 35vmin;
-    /* Kleinere Viewport-Dimension */
     min-width: 160px;
     height: 35vmin;
-    /* Quadratisch */
     min-height: 160px;
     background: linear-gradient(to bottom, #ff0000 50%, #ffffff 50%);
     border-radius: 50%;
@@ -30,7 +27,6 @@
     top: 50%;
     left: 50%;
     width: 5vmin;
-    /* Proportional */
     min-width: 20px;
     height: 5vmin;
     min-height: 20px;
@@ -47,7 +43,6 @@
     left: 0;
     right: 0;
     height: 1.5vmin;
-    /* Proportional */
     min-height: 6px;
     background: #000000;
     transform: translateY(-50%);
@@ -75,4 +70,36 @@
     border-radius: 50%;
     border: 1px solid #000000;
     box-sizing: border-box;
+}
+
+.loading-animation {
+    position: relative;
+    overflow: hidden;
+    color: white;
+    background-color: #444;
+}
+
+.loading-animation::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: #c26111;
+    opacity: 0.3;
+    
+    animation: fillBar 1.5s forwards;
+    z-index: 0;
+}
+
+.loading-animation span {
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes fillBar {
+    to {
+        width: 100%;
+    }
 }

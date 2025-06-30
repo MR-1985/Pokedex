@@ -133,7 +133,9 @@ function renderPkmCard() {
     contentRef.innerHTML = "";
     for (let index = 0; index < allPkm.length; index++) {
         const pkm = allPkm[index];
-        contentRef.innerHTML += renderPkmCardTemp(index, pkm);
+        let type1 = pkm.type[0]?.type.name || "unbekannt";
+        let type2 = pkm.type[1]?.type.name || "";
+        contentRef.innerHTML += renderPkmCardTemp(type1, type2, index, pkm);
     };
     scalePkmCards();
 };
@@ -169,22 +171,6 @@ function closeOverlay() {
     };
 };
 
-// function visibilityOverlay(index) {
-//     currentPokemonIndex = index;
-//     const overlay = document.getElementById("overlay");
-//     const contentRef = document.getElementById("content");
-//     const isOverlayNotVisible = overlay.classList.contains("d-none"); //Overlay ist unsichtbar durch d-none
-//     if (isOverlayNotVisible) {
-//         overlay.classList.remove("d-none");
-//         contentRef.classList.add("d-none");
-//         renderOverlayCard(index);
-//         enableFilterTab(index);
-//     } else {
-//         contentRef.classList.remove("d-none");
-//         overlay.classList.add("d-none");
-//     };
-// };
-
 function visibilityOverlay(index) {
     currentPokemonIndex = index;
     const overlay = document.getElementById("overlay");
@@ -203,7 +189,9 @@ function visibilityOverlay(index) {
 function renderOverlayCard(index) {
     const pkm = allPkm[index];
     const contentContainerRef = document.getElementById("overlay-content-container");
-    contentContainerRef.innerHTML = renderOverlayCardTemplate(index, pkm);
+    const type1 = pkm.type[0]?.type.name || "unbekannt";
+    const type2 = pkm.type[1]?.type.name || "";
+    contentContainerRef.innerHTML = renderOverlayCardTemplate(type1, type2, index, pkm);
     scalePkm();
 };
 
@@ -216,7 +204,7 @@ function getFilters() {
 };
 
 function enableFilterTab(pkmIndex, filterNumber = 0) {
-    const filters = getFilters(); //alle Filter sind nun in der Variable Filters drin
+    const filters = getFilters();
     filters.forEach((filter, index) => {
         const isActivFilter = index === filterNumber;
         if (isActivFilter) {
@@ -254,18 +242,31 @@ function findPokemon() {
     const searchValue = document.getElementById('input').value.toLowerCase().trim();
     const contentRef = document.getElementById("content");
     contentRef.innerHTML = "";
-    let filteredPkmWithIndex = allPkm
-        .map((pkm, index) => ({ pkm, index })).filter(item => item.pkm.name.startsWith(searchValue));
+    let filteredPkmWithIndex = allPkm.map((pkm, index) => ({ pkm, index })).filter(item => item.pkm.name.startsWith(searchValue));
     if (filteredPkmWithIndex.length === 0) {
-        alert("No Pokémon found with this letter combination.");
-        document.getElementById('input').value = "";
-        findPokemon();
+        styleTheButton();
         return;
     }
     filteredPkmWithIndex.forEach(({ pkm, index }) => {
-        contentRef.innerHTML += renderPkmCardTemp(index, pkm);
+        const type1 = pkm.type[0]?.type.name || "unbekannt";
+        const type2 = pkm.type[1]?.type.name || "";
+        contentRef.innerHTML += renderPkmCardTemp(type1, type2, index, pkm);
     });
     scalePkmCards();
+}
+
+function styleTheButton() {
+    document.getElementById('input').value = "";
+    let styledButton = document.getElementById("load-more-button")
+    styledButton.disabled = true;
+    styledButton.classList.add("loading-animation");
+    let buttonText = "loading".toUpperCase();
+    styledButton.innerHTML = buttonText;
+    document.getElementById("content").innerHTML += renderNothingFoundTemp();
+    setTimeout(() => {
+        styledButton.classList.remove("loading-animation")
+        findPokemon();
+    }, 1500);
 }
 
 function showPreviousPokemon() {

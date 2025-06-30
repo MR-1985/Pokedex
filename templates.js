@@ -1,6 +1,4 @@
-function renderPkmCardTemp(index, pkm) {
-    let type1 = pkm.type[0]?.type.name || "unbekannt";
-    let type2 = pkm.type[1]?.type.name || "";
+function renderPkmCardTemp(type1, type2, index, pkm) {
     return `
 <div onclick="visibilityOverlay(${index})" id="poke-card-${index}" class="card pokemon-card type-${type1}">
     <div id="pkm-name-id-${index}">
@@ -27,9 +25,7 @@ function renderPkmCardTemp(index, pkm) {
     `
 };
 
-function renderOverlayCardTemplate(index, pkm) {
-    const type1 = pkm.type[0]?.type.name || "unbekannt";
-    const type2 = pkm.type[1]?.type.name || "";
+function renderOverlayCardTemplate(type1, type2, index, pkm) {
     return `
     <div onclick="event.stopPropagation()" id="poke-card-${index}" class="rounded-4 mt-5 h-600 type-${type1}">
         <div id="pkm-name-id-${index}" class="pkm-name-id-overlay-card">
@@ -122,3 +118,7 @@ function evoTabTemp(index) {
         `;
     }).join('');
 }
+
+function renderNothingFoundTemp(){
+    return `<p style=""><b><i>"No Pokemon, with this letters found"</i></b></p>`
+};
