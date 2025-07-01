@@ -219,7 +219,8 @@ function enableFilterTab(pkmIndex, filterNumber = 0) {
 function renderTempForActivFilter(index, pkmIndex) {
     switch (index) {
         case 0:
-            document.getElementById("main").innerHTML = mainTabTemp(pkmIndex);
+            const pkm = allPkm[index];
+            document.getElementById("main").innerHTML = mainTabTemp(pkm);
             break;
         case 1:
             document.getElementById("stats").innerHTML = statsTabTemp(pkmIndex);
@@ -251,6 +252,7 @@ function findPokemon() {
         const type1 = pkm.type[0]?.type.name || "unbekannt";
         const type2 = pkm.type[1]?.type.name || "";
         contentRef.innerHTML += renderPkmCardTemp(type1, type2, index, pkm);
+        
     });
     scalePkmCards();
 }
@@ -259,14 +261,21 @@ function styleTheButton() {
     document.getElementById('input').value = "";
     let styledButton = document.getElementById("load-more-button")
     styledButton.disabled = true;
-    styledButton.classList.add("loading-animation");
     let buttonText = "loading".toUpperCase();
     styledButton.innerHTML = buttonText;
+    styledButton.classList.add("loading-animation");
     document.getElementById("content").innerHTML += renderNothingFoundTemp();
     setTimeout(() => {
         styledButton.classList.remove("loading-animation")
+        resetStyledButton(styledButton);
         findPokemon();
     }, 1500);
+}
+
+function resetStyledButton(styledButton){
+    oldButtonText = "load more pokemon";
+    styledButton.disabled = false;
+    styledButton.innerHTML = oldButtonText;
 }
 
 function showPreviousPokemon() {

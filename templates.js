@@ -76,8 +76,7 @@ function renderOverlayCardTemplate(type1, type2, index, pkm) {
     `
 };
 
-function mainTabTemp(index) {
-    const pkm = allPkm[index];
+function mainTabTemp(pkm) {
     return `   
     <p>Abilities: ${pkm.abilities.map(a => a.ability.name).join(', ')}</p>
         <p>Height: ${pkm.height}</p>
