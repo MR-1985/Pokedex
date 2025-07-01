@@ -2,25 +2,24 @@ let currentIndex = 0;
 let allPkm = [];
 let currentPokemonIndex = 0;
 let urls = [];
-const limit = 20
+const limit = 20;
 const maxOffset = 1099;
 
 function setOffset() {
     for (let offset = 0; offset <= maxOffset; offset += limit) {
         urls.push(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
-    }
+    };
 }
 
 function showSpinner() {
     document.getElementById('spinner-overlay').classList.remove("d-none");
     document.getElementById('content').classList.add("d-none");
-};
+}
 
 function hideSpinner() {
-
     document.getElementById('spinner-overlay').classList.add("d-none");
     document.getElementById('content').classList.remove("d-none");
-};
+}
 
 function hideLoadButton() {
     document.getElementById("load-more-button").classList.add("d-none");
@@ -32,8 +31,7 @@ function showLoadButton() {
 
 async function loadPokemons() {
     try {
-        hideLoadButton();
-        showSpinner();
+        prepareLoadingUI()
         const url = urls[currentIndex];
         currentIndex++;
         let response = await fetch(url);
@@ -41,13 +39,21 @@ async function loadPokemons() {
         let data = responseToJson.results;
         await loadPkmDetails(data);
         renderPkmCard();
+        closeLoadingUI()
     } catch (error) {
         console.error("Error loading Pokemon", error);
-    } finally {
-        hideSpinner();
-        showLoadButton();
-    }
-};
+    };
+}
+
+function prepareLoadingUI() {
+    hideLoadButton();
+    showSpinner();
+}
+
+function closeLoadingUI() {
+    hideSpinner();
+    showLoadButton();
+}
 
 async function loadPkmDetails(data) {
     try {
@@ -61,7 +67,7 @@ async function loadPkmDetails(data) {
         console.error("Error loading Pokemon Details", error);
         return
     };
-};
+}
 
 function pushPokemon(detailData) {
     allPkm.push({
@@ -76,14 +82,14 @@ function pushPokemon(detailData) {
         stats: detailData.stats,
         species_url: detailData.species.url
     });
-};
-
-async function evoTabClicked(index) {
-    await enableFilterTab(index, 2);
-    const species_url = allPkm[index].species_url;
-    await loadEvoChain(species_url, index);
 }
 
+async function evoTabClicked(index) {
+    // enableFilterTab(index, 2);
+    const species_url = allPkm[index].species_url;
+    await loadEvoChain(species_url, index);
+    enableFilterTab(index, 2);
+}
 
 async function loadEvoChain(species_url, index) {
     try {
@@ -94,13 +100,12 @@ async function loadEvoChain(species_url, index) {
         let evoImages = [];
         await traverseEvoChain(evoData.chain, evoImages);
         allPkm[index].evolutions = evoImages;
-        document.getElementById("evo").innerHTML = evoTabTemp(index);
         return evoImages;
     } catch (error) {
         console.error("Error loading Evo Chain", error);
         return
     };
-};
+}
 
 async function traverseEvoChain(chain, evoImages) {
     try {
@@ -115,7 +120,7 @@ async function traverseEvoChain(chain, evoImages) {
         console.error("Error loading evochain:", error);
         return
     };
-};
+}
 
 async function getPokemonImage(pokeName) {
     try {
@@ -126,7 +131,7 @@ async function getPokemonImage(pokeName) {
         console.error(`Error loading image for ${pokeName}:`, error);
         return
     };
-};
+}
 
 function renderPkmCard() {
     let contentRef = document.getElementById("content");
@@ -138,7 +143,7 @@ function renderPkmCard() {
         contentRef.innerHTML += renderPkmCardTemp(type1, type2, index, pkm);
     };
     scalePkmCards();
-};
+}
 
 function scalePkmCards() {
     let imgPkmCards = document.querySelectorAll(".pkm-cards");
@@ -150,7 +155,7 @@ function scalePkmCards() {
             });
         }, 200);
     };
-};
+}
 
 function scalePkm() {
     let imgInOverlayCard = document.getElementById("imgInOverlayCard");
@@ -159,7 +164,7 @@ function scalePkm() {
             imgInOverlayCard.classList.add("pkm-scale");
         }, 200);
     };
-};
+}
 
 function closeOverlay() {
     const overlay = document.getElementById("overlay");
@@ -169,19 +174,17 @@ function closeOverlay() {
         overlay.classList.add("d-none");
         contentRef.classList.remove("d-none");
     };
-};
+}
 
 function visibilityOverlay(index) {
     currentPokemonIndex = index;
     const overlay = document.getElementById("overlay");
     const contentRef = document.getElementById("content");
     const isOverlayNotVisible = overlay.classList.contains("d-none");
-
     if (isOverlayNotVisible) {
         overlay.classList.remove("d-none");
         contentRef.classList.add("d-none");
-    }
-
+    };
     renderOverlayCard(index);
     enableFilterTab(index);
 }
@@ -193,7 +196,7 @@ function renderOverlayCard(index) {
     const type2 = pkm.type[1]?.type.name || "";
     contentContainerRef.innerHTML = renderOverlayCardTemplate(type1, type2, index, pkm);
     scalePkm();
-};
+}
 
 function getFilters() {
     return [
@@ -201,7 +204,7 @@ function getFilters() {
         document.getElementById("stats"),
         document.getElementById("evo")
     ];
-};
+}
 
 function enableFilterTab(pkmIndex, filterNumber = 0) {
     const filters = getFilters();
@@ -212,32 +215,45 @@ function enableFilterTab(pkmIndex, filterNumber = 0) {
             renderTempForActivFilter(index, pkmIndex);
         } else {
             filter.classList.add("d-none");
-        }
+        };
     });
-};
+}
 
-function renderTempForActivFilter(index, pkmIndex) {
+function renderTempForActivFilter(index, pkm) {
+    pkm = allPkm[pkm];
+    let html = ""
+    workWithSwitchCase(index, pkm, html);
+}
+
+function workWithSwitchCase(index, pkm, html) {
     switch (index) {
         case 0:
-            const pkm = allPkm[index];
-            document.getElementById("main").innerHTML = mainTabTemp(pkm);
+            html = mainTabTemp(pkm);
+            document.getElementById("main").innerHTML = html;
             break;
         case 1:
-            document.getElementById("stats").innerHTML = statsTabTemp(pkmIndex);
+            html = statsTabTemp(index);
+            document.getElementById("stats").innerHTML = html;
             break;
         default:
-            document.getElementById("evo").innerHTML = evoTabTemp(pkmIndex);
+            html = preparingForEvoTabTemp(index);
+            document.getElementById("evo").innerHTML = html;
             break;
     };
-};
+}
 
-function disableButton(index) {
-    document.getElementById(`load-more-button-${index}`).disabled = true;
-};
-
-function enableNextButton(index) {
-    document.getElementById(`load-more-button-${index}`).disabled = false;
-};
+function preparingForEvoTabTemp(index) {
+    const pkm = allPkm[index];
+    const evolutions = pkm.evolutions;
+    const evoContainer = document.getElementById("evo");
+    if (!evolutions){
+       return showMiniSpinnerTemp();
+    }
+    if (EvoImages.length === 0) {
+        return evoContainer.innerHTML = showErrorTextTemp(pkm);
+    }
+    return showEvolutionsTemp(index,evolutions);
+}
 
 function findPokemon() {
     const searchValue = document.getElementById('input').value.toLowerCase().trim();
@@ -248,13 +264,16 @@ function findPokemon() {
         styleTheButton();
         return;
     }
+    workWithFiltertPokemon(filteredPkmWithIndex, contentRef);
+    scalePkmCards();
+}
+
+function workWithFiltertPokemon(filteredPkmWithIndex, contentRef) {
     filteredPkmWithIndex.forEach(({ pkm, index }) => {
         const type1 = pkm.type[0]?.type.name || "unbekannt";
         const type2 = pkm.type[1]?.type.name || "";
         contentRef.innerHTML += renderPkmCardTemp(type1, type2, index, pkm);
-        
     });
-    scalePkmCards();
 }
 
 function styleTheButton() {
@@ -272,7 +291,7 @@ function styleTheButton() {
     }, 1500);
 }
 
-function resetStyledButton(styledButton){
+function resetStyledButton(styledButton) {
     oldButtonText = "load more pokemon";
     styledButton.disabled = false;
     styledButton.innerHTML = oldButtonText;
@@ -283,7 +302,7 @@ function showPreviousPokemon() {
         currentPokemonIndex--;
     } else {
         currentPokemonIndex = allPkm.length - 1;
-    }
+    };
     renderOverlayCard(currentPokemonIndex)
     enableFilterTab(currentPokemonIndex)
 }
@@ -293,7 +312,7 @@ function showNextPokemon() {
         currentPokemonIndex++;
     } else {
         currentPokemonIndex = 0;
-    }
+    };
     renderOverlayCard(currentPokemonIndex);
     enableFilterTab(currentPokemonIndex)
 }
@@ -305,5 +324,5 @@ function openFromEvo(pokeName) {
         visibilityOverlay(index);
     } else {
         console.error(`Pokémon ${pokeName} nicht im allPkm-Array gefunden.`);
-    }
+    };
 }

@@ -95,21 +95,41 @@ function statsTabTemp(index) {
     return statsForStatsTab;
 }
 
-function evoTabTemp(index) {
-    const pkm = allPkm[index];
-    const evolutions = pkm.evolutions;
+// function evoTabTemp(index) {
+//     const pkm = allPkm[index];
+//     const evolutions = pkm.evolutions;
 
-    if (!evolutions) {
-        return `<div id="evo-mini-spinner" class="mini-spinner-ball"></div>`;
-    }
+//     if (!evolutions) {
+//         return `<div id="evo-mini-spinner" class="mini-spinner-ball"></div>`;
+//     }
 
-    if (evolutions.length === 0) {
-        return `<p>${pkm.name} has no evolutions.</p>`;
-    }
+//     if (evolutions.length === 0) {
+//         return `<p>${pkm.name} has no evolutions.</p>`;
+//     }
 
-    return evolutions.map(evo => {
+//     return evolutions.map(evo => {
+//         return `
+//             <div class="evo-container">
+//                 <img src="${evo.image}" alt="${evo.name}" class="evo-img"
+//                      onclick="openFromEvo('${evo.name}')">
+//                 <p>${evo.name}</p>
+//             </div>
+//         `;
+//     }).join('');
+// }
+
+function showMiniSpinnerTemp() {
+    return `<div id="evo-mini-spinner" class="mini-spinner-ball"></div>`;
+}
+
+function showErrorTextTemp(pkm) {
+    return `<p>${pkm.name} has no evolutions.</p>`;
+}
+
+function showEvolutionsTemp(index,evolutions) {
+    return evolutions[index].map(evo => {
         return `
-            <div class="evo-container" id="evo-container">
+            <div class="evo-container">
                 <img src="${evo.image}" alt="${evo.name}" class="evo-img"
                      onclick="openFromEvo('${evo.name}')">
                 <p>${evo.name}</p>
@@ -118,6 +138,6 @@ function evoTabTemp(index) {
     }).join('');
 }
 
-function renderNothingFoundTemp(){
+function renderNothingFoundTemp() {
     return `<p style=""><b><i>"No Pokemon, with this letters found"</i></b></p>`
 };

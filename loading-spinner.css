@@ -86,9 +86,9 @@
     left: 0;
     width: 0%;
     height: 100%;
-    background-color: #c26111;
-    opacity: 0.3;
-    
+    background-color: #f3a25f;
+    opacity: 0.7;
+    filter: brightness(1);
     animation: fillBar 1.5s forwards;
     z-index: 0;
 }
