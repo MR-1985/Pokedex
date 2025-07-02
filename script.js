@@ -85,7 +85,6 @@ function pushPokemon(detailData) {
 }
 
 async function evoTabClicked(index) {
-    // enableFilterTab(index, 2);
     const species_url = allPkm[index].species_url;
     await loadEvoChain(species_url, index);
     enableFilterTab(index, 2);
@@ -232,7 +231,7 @@ function workWithSwitchCase(index, pkm, html) {
             document.getElementById("main").innerHTML = html;
             break;
         case 1:
-            html = statsTabTemp(index);
+            html = preparingForStatsTabTemp(index);
             document.getElementById("stats").innerHTML = html;
             break;
         default:
@@ -240,6 +239,17 @@ function workWithSwitchCase(index, pkm, html) {
             document.getElementById("evo").innerHTML = html;
             break;
     };
+}
+
+function preparingForStatsTabTemp(index){
+    const pkm = allPkm[index];
+    const statsContainer = document.getElementById("stats");
+    const statsForStatsTab = pkm.stats.map(statObj => {
+        const statName = statObj.stat.name;
+        const baseStat = statObj.base_stat;
+        return statsContainer.innerHTML = statsTabTemp(statName,baseStat)
+        }).join('');
+    return statsForStatsTab;
 }
 
 function preparingForEvoTabTemp(index) {

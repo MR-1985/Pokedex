@@ -85,14 +85,18 @@ function mainTabTemp(pkm) {
         `
 }
 
-function statsTabTemp(index) {
-    const pkm = allPkm[index];
-    const statsForStatsTab = pkm.stats.map(statObj => {
-        const statName = statObj.stat.name;
-        const baseStat = statObj.base_stat;
-        return `<p>${statName}: ${baseStat}</p>`;
-    }).join('');
-    return statsForStatsTab;
+// function statsTabTemp(index) {
+//     const pkm = allPkm[index];
+//     const statsForStatsTab = pkm.stats.map(statObj => {
+//         const statName = statObj.stat.name;
+//         const baseStat = statObj.base_stat;
+//         return `<p>${statName}: ${baseStat}</p>`;
+//     }).join('');
+//     return statsForStatsTab;
+// }
+
+function statsTabTemp(statName,baseStat){
+    return `<p>${statName}: ${baseStat}</p>`;
 }
 
 // function evoTabTemp(index) {
