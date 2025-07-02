@@ -95,7 +95,7 @@ function mainTabTemp(pkm) {
 //     return statsForStatsTab;
 // }
 
-function statsTabTemp(statName,baseStat){
+function statsTabTemp(statName, baseStat) {
     return `<p>${statName}: ${baseStat}</p>`;
 }
 
@@ -130,16 +130,26 @@ function showErrorTextTemp(pkm) {
     return `<p>${pkm.name} has no evolutions.</p>`;
 }
 
-function showEvolutionsTemp(index,evolutions) {
-    return evolutions[index].map(evo => {
-        return `
-            <div class="evo-container">
-                <img src="${evo.image}" alt="${evo.name}" class="evo-img"
-                     onclick="openFromEvo('${evo.name}')">
-                <p>${evo.name}</p>
-            </div>
-        `;
-    }).join('');
+// function showEvolutionsTemp(index,evolutions) {
+//     return evolutions[index].map(evo => {
+//         return `
+//             <div class="evo-container">
+//                 <img src="${evo.image}" alt="${evo.name}" class="evo-img"
+//                      onclick="openFromEvo('${evo.name}')">
+//                 <p>${evo.name}</p>
+//             </div>
+//         `;
+//     }).join('');
+// }
+
+function showEvolutionsTemp(evo) {
+    return `
+             <div class="evo-container">
+                 <img src="${evo.image}" alt="${evo.name}" class="evo-img"
+                      onclick="openFromEvo('${evo.name}')">
+                 <p>${evo.name}</p>
+             </div>
+         `;
 }
 
 function renderNothingFoundTemp() {

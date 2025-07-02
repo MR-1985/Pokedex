@@ -2,7 +2,7 @@ let currentIndex = 0;
 let allPkm = [];
 let currentPokemonIndex = 0;
 let urls = [];
-const limit = 20;
+const limit = 3;
 const maxOffset = 1099;
 
 function setOffset() {
@@ -241,98 +241,151 @@ function workWithSwitchCase(index, pkm, html) {
     };
 }
 
-function preparingForStatsTabTemp(index){
+// function preparingForStatsTabTemp(index) {
+//     const pkm = allPkm[index];
+//     const statsContainer = document.getElementById("stats");
+//     const statsForStatsTab = pkm.stats.map(statObj => {
+//         const statName = statObj.stat.name;
+//         const baseStat = statObj.base_stat;
+//         return statsContainer.innerHTML = statsTabTemp(statName, baseStat)
+//     }).join('');
+//     return statsForStatsTab;
+// }
+
+function preparingForStatsTabTemp(index) {
     const pkm = allPkm[index];
-    const statsContainer = document.getElementById("stats");
-    const statsForStatsTab = pkm.stats.map(statObj => {
+    const statsHtml = pkm.stats.map(statObj => {
         const statName = statObj.stat.name;
         const baseStat = statObj.base_stat;
-        return statsContainer.innerHTML = statsTabTemp(statName,baseStat)
-        }).join('');
-    return statsForStatsTab;
+        return statsTabTemp(statName, baseStat);
+    }).join('');
+    return statsHtml;
 }
 
-function preparingForEvoTabTemp(index) {
-    const pkm = allPkm[index];
-    const evolutions = pkm.evolutions;
+function preparingForEvoTabTemp() {
+    //     const pkm = allPkm[index];
+    //     for (let i = 0; i < allPkm.length; i++) {
+    //     const evolutions = pkm[i];
+    //     const evoContainer = document.getElementById("evo");
+    //     if (!evolutions) {
+    //         return evoContainer.innerHTML = showMiniSpinnerTemp();
+    //     }
+    //     if (evolutions.length === 0) {
+    //         evoContainer.innerHTML = showErrorTextTemp(pkm);
+    //         return;
+    //     }
+    //     return evolutions.map(evo => {
+    //         return evoContainer.innerHTML = showEvolutionsTemp(evo);
+    //     }).join('');
+    // }
+
+
+
+
+    // const pkm = allPkm[index];
+    // const evolutions = pkm.evolutions;
+    // const evoContainer = document.getElementById("evo");
+
+    // if (!evolutions) {
+    //     evoContainer.innerHTML = showMiniSpinnerTemp();
+    //     return;
+    // }
+
+    // if (evolutions.length === 0) {
+    //     evoContainer.innerHTML = showErrorTextTemp(pkm);
+    //     return;
+    // }
+
+    // const html = evolutions.map(evo => showEvolutionsTemp(evo)).join('');
+    // evoContainer.innerHTML = html;
+
+
     const evoContainer = document.getElementById("evo");
-    if (!evolutions){
-       return showMiniSpinnerTemp();
+    const allEntries = Object.values(allPkm);
+    for (let i = 0; i < allEntries.length; i++) {
+        const pkm = allEntries[i];
+        if (!Array.isArray(pkm.evolutions)) {
+            evoContainer.innerHTML = showMiniSpinnerTemp();
+            return;
+        }
+        const evo = pkm.evolutions[i];
+        if (!evo) {
+            evoContainer.innerHTML = showErrorTextTemp(pkm);
+            return;
+        }
+        evoContainer.innerHTML = showEvolutionsTemp(evo);
     }
-    if (EvoImages.length === 0) {
-        return evoContainer.innerHTML = showErrorTextTemp(pkm);
+    
     }
-    return showEvolutionsTemp(index,evolutions);
-}
 
-function findPokemon() {
-    const searchValue = document.getElementById('input').value.toLowerCase().trim();
-    const contentRef = document.getElementById("content");
-    contentRef.innerHTML = "";
-    let filteredPkmWithIndex = allPkm.map((pkm, index) => ({ pkm, index })).filter(item => item.pkm.name.startsWith(searchValue));
-    if (filteredPkmWithIndex.length === 0) {
-        styleTheButton();
-        return;
+    function findPokemon() {
+        const searchValue = document.getElementById('input').value.toLowerCase().trim();
+        const contentRef = document.getElementById("content");
+        contentRef.innerHTML = "";
+        let filteredPkmWithIndex = allPkm.map((pkm, index) => ({ pkm, index })).filter(item => item.pkm.name.startsWith(searchValue));
+        if (filteredPkmWithIndex.length === 0) {
+            styleTheButton();
+            return;
+        }
+        workWithFiltertPokemon(filteredPkmWithIndex, contentRef);
+        scalePkmCards();
     }
-    workWithFiltertPokemon(filteredPkmWithIndex, contentRef);
-    scalePkmCards();
-}
 
-function workWithFiltertPokemon(filteredPkmWithIndex, contentRef) {
-    filteredPkmWithIndex.forEach(({ pkm, index }) => {
-        const type1 = pkm.type[0]?.type.name || "unbekannt";
-        const type2 = pkm.type[1]?.type.name || "";
-        contentRef.innerHTML += renderPkmCardTemp(type1, type2, index, pkm);
-    });
-}
+    function workWithFiltertPokemon(filteredPkmWithIndex, contentRef) {
+        filteredPkmWithIndex.forEach(({ pkm, index }) => {
+            const type1 = pkm.type[0]?.type.name || "unbekannt";
+            const type2 = pkm.type[1]?.type.name || "";
+            contentRef.innerHTML += renderPkmCardTemp(type1, type2, index, pkm);
+        });
+    }
 
-function styleTheButton() {
-    document.getElementById('input').value = "";
-    let styledButton = document.getElementById("load-more-button")
-    styledButton.disabled = true;
-    let buttonText = "loading".toUpperCase();
-    styledButton.innerHTML = buttonText;
-    styledButton.classList.add("loading-animation");
-    document.getElementById("content").innerHTML += renderNothingFoundTemp();
-    setTimeout(() => {
-        styledButton.classList.remove("loading-animation")
-        resetStyledButton(styledButton);
-        findPokemon();
-    }, 1500);
-}
+    function styleTheButton() {
+        document.getElementById('input').value = "";
+        let styledButton = document.getElementById("load-more-button")
+        styledButton.disabled = true;
+        let buttonText = "loading".toUpperCase();
+        styledButton.innerHTML = buttonText;
+        styledButton.classList.add("loading-animation");
+        document.getElementById("content").innerHTML += renderNothingFoundTemp();
+        setTimeout(() => {
+            styledButton.classList.remove("loading-animation")
+            resetStyledButton(styledButton);
+            findPokemon();
+        }, 1500);
+    }
 
-function resetStyledButton(styledButton) {
-    oldButtonText = "load more pokemon";
-    styledButton.disabled = false;
-    styledButton.innerHTML = oldButtonText;
-}
+    function resetStyledButton(styledButton) {
+        oldButtonText = "load more pokemon";
+        styledButton.disabled = false;
+        styledButton.innerHTML = oldButtonText;
+    }
 
-function showPreviousPokemon() {
-    if (currentPokemonIndex > 0) {
-        currentPokemonIndex--;
-    } else {
-        currentPokemonIndex = allPkm.length - 1;
-    };
-    renderOverlayCard(currentPokemonIndex)
-    enableFilterTab(currentPokemonIndex)
-}
+    function showPreviousPokemon() {
+        if (currentPokemonIndex > 0) {
+            currentPokemonIndex--;
+        } else {
+            currentPokemonIndex = allPkm.length - 1;
+        };
+        renderOverlayCard(currentPokemonIndex)
+        enableFilterTab(currentPokemonIndex)
+    }
 
-function showNextPokemon() {
-    if (currentPokemonIndex < allPkm.length - 1) {
-        currentPokemonIndex++;
-    } else {
-        currentPokemonIndex = 0;
-    };
-    renderOverlayCard(currentPokemonIndex);
-    enableFilterTab(currentPokemonIndex)
-}
+    function showNextPokemon() {
+        if (currentPokemonIndex < allPkm.length - 1) {
+            currentPokemonIndex++;
+        } else {
+            currentPokemonIndex = 0;
+        };
+        renderOverlayCard(currentPokemonIndex);
+        enableFilterTab(currentPokemonIndex)
+    }
 
-function openFromEvo(pokeName) {
-    const index = allPkm.findIndex(pkm => pkm.name === pokeName);
-    if (index !== -1) {
-        currentPokemonIndex = index;
-        visibilityOverlay(index);
-    } else {
-        console.error(`Pokémon ${pokeName} nicht im allPkm-Array gefunden.`);
-    };
-}
+    function openFromEvo(pokeName) {
+        const index = allPkm.findIndex(pkm => pkm.name === pokeName);
+        if (index !== -1) {
+            currentPokemonIndex = index;
+            visibilityOverlay(index);
+        } else {
+            console.error(`Pokémon ${pokeName} nicht im allPkm-Array gefunden.`);
+        };
+    }
