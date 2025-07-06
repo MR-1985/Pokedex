@@ -2,7 +2,7 @@ let currentIndex = 0;
 let allPkm = [];
 let currentPokemonIndex = 0;
 let urls = [];
-const limit = 3;
+const limit = 7;
 const maxOffset = 1099;
 
 function setOffset() {
@@ -231,53 +231,56 @@ function workWithSwitchCase(index, pkm, html) {
             document.getElementById("main").innerHTML = html;
             break;
         case 1:
-            html = preparingForStatsTabTemp(index);
+            html = preparingForStatsTabTemp(pkm);
             document.getElementById("stats").innerHTML = html;
             break;
         default:
-            html = preparingForEvoTabTemp(index);
+            html = preparingForEvoTabTemp(pkm);
             document.getElementById("evo").innerHTML = html;
             break;
     };
 }
 
-// function preparingForStatsTabTemp(index) {
-//     const pkm = allPkm[index];
-//     const statsContainer = document.getElementById("stats");
-//     const statsForStatsTab = pkm.stats.map(statObj => {
-//         const statName = statObj.stat.name;
-//         const baseStat = statObj.base_stat;
-//         return statsContainer.innerHTML = statsTabTemp(statName, baseStat)
-//     }).join('');
-//     return statsForStatsTab;
-// }
-
 function preparingForStatsTabTemp(index) {
-    const pkm = allPkm[index];
-    const statsHtml = pkm.stats.map(statObj => {
+    // const pkm = allPkm[index];
+    if (!pkm) {
+        console.error("Fehler: Kein Pokémon an diesem Index.");
+        return;
+    }
+    const statsContainer = document.getElementById("stats");
+    const statsForStatsTab = allPkm.stats.map(statObj => {
         const statName = statObj.stat.name;
         const baseStat = statObj.base_stat;
-        return statsTabTemp(statName, baseStat);
+        return statsContainer.innerHTML = statsTabTemp(statName, baseStat)
     }).join('');
-    return statsHtml;
+    return statsForStatsTab;
 }
 
+// function preparingForStatsTabTemp(index) {
+//     const pkm = allPkm[index];
+//     const statsHtml = pkm.stats.map(statObj => {
+//         const statName = statObj.stat.name;
+//         const baseStat = statObj.base_stat;
+//         return statsTabTemp(statName, baseStat);
+//     }).join('');
+//     return statsHtml;
+// }
+
 function preparingForEvoTabTemp() {
-    //     const pkm = allPkm[index];
-    //     for (let i = 0; i < allPkm.length; i++) {
-    //     const evolutions = pkm[i];
-    //     const evoContainer = document.getElementById("evo");
-    //     if (!evolutions) {
-    //         return evoContainer.innerHTML = showMiniSpinnerTemp();
-    //     }
-    //     if (evolutions.length === 0) {
-    //         evoContainer.innerHTML = showErrorTextTemp(pkm);
-    //         return;
-    //     }
-    //     return evolutions.map(evo => {
-    //         return evoContainer.innerHTML = showEvolutionsTemp(evo);
-    //     }).join('');
-    // }
+    for (let i = 0; i < allPkm.length; i++) {
+        const evolutions = allPkm[i].evolutions;
+        const evoContainer = document.getElementById("evo");
+        if (!evolutions) {
+            return evoContainer.innerHTML = showMiniSpinnerTemp();
+        }
+        if (evolutions.length === 0) {
+            evoContainer.innerHTML = showErrorTextTemp(pkm);
+            return;
+        }
+        return evolutions.map(evo => {
+            return evoContainer.innerHTML = showEvolutionsTemp(evo);
+        }).join('');
+    }
 
 
 
@@ -300,92 +303,92 @@ function preparingForEvoTabTemp() {
     // evoContainer.innerHTML = html;
 
 
-    const evoContainer = document.getElementById("evo");
-    const allEntries = Object.values(allPkm);
-    for (let i = 0; i < allEntries.length; i++) {
-        const pkm = allEntries[i];
-        if (!Array.isArray(pkm.evolutions)) {
-            evoContainer.innerHTML = showMiniSpinnerTemp();
-            return;
-        }
-        const evo = pkm.evolutions[i];
-        if (!evo) {
-            evoContainer.innerHTML = showErrorTextTemp(pkm);
-            return;
-        }
-        evoContainer.innerHTML = showEvolutionsTemp(evo);
-    }
-    
-    }
+    // const evoContainer = document.getElementById("evo");
+    // const allEntries = Object.values(allPkm);
+    // for (let i = 0; i < allEntries.length; i++) {
+    //     const pkm = allEntries[i];
+    //     if (!Array.isArray(pkm.evolutions)) {
+    //         evoContainer.innerHTML = showMiniSpinnerTemp();
+    //         return;
+    //     }
+    //     const evo = pkm.evolutions[i];
+    //     if (!evo) {
+    //         evoContainer.innerHTML = showErrorTextTemp(pkm);
+    //         return;
+    //     }
+    //     evoContainer.innerHTML = showEvolutionsTemp(evo);
+    // }
 
-    function findPokemon() {
-        const searchValue = document.getElementById('input').value.toLowerCase().trim();
-        const contentRef = document.getElementById("content");
-        contentRef.innerHTML = "";
-        let filteredPkmWithIndex = allPkm.map((pkm, index) => ({ pkm, index })).filter(item => item.pkm.name.startsWith(searchValue));
-        if (filteredPkmWithIndex.length === 0) {
-            styleTheButton();
-            return;
-        }
-        workWithFiltertPokemon(filteredPkmWithIndex, contentRef);
-        scalePkmCards();
-    }
+}
 
-    function workWithFiltertPokemon(filteredPkmWithIndex, contentRef) {
-        filteredPkmWithIndex.forEach(({ pkm, index }) => {
-            const type1 = pkm.type[0]?.type.name || "unbekannt";
-            const type2 = pkm.type[1]?.type.name || "";
-            contentRef.innerHTML += renderPkmCardTemp(type1, type2, index, pkm);
-        });
+function findPokemon() {
+    const searchValue = document.getElementById('input').value.toLowerCase().trim();
+    const contentRef = document.getElementById("content");
+    contentRef.innerHTML = "";
+    let filteredPkmWithIndex = allPkm.map((pkm, index) => ({ pkm, index })).filter(item => item.pkm.name.startsWith(searchValue));
+    if (filteredPkmWithIndex.length === 0) {
+        styleTheButton();
+        return;
     }
+    workWithFiltertPokemon(filteredPkmWithIndex, contentRef);
+    scalePkmCards();
+}
 
-    function styleTheButton() {
-        document.getElementById('input').value = "";
-        let styledButton = document.getElementById("load-more-button")
-        styledButton.disabled = true;
-        let buttonText = "loading".toUpperCase();
-        styledButton.innerHTML = buttonText;
-        styledButton.classList.add("loading-animation");
-        document.getElementById("content").innerHTML += renderNothingFoundTemp();
-        setTimeout(() => {
-            styledButton.classList.remove("loading-animation")
-            resetStyledButton(styledButton);
-            findPokemon();
-        }, 1500);
-    }
+function workWithFiltertPokemon(filteredPkmWithIndex, contentRef) {
+    filteredPkmWithIndex.forEach(({ pkm, index }) => {
+        const type1 = pkm.type[0]?.type.name || "unbekannt";
+        const type2 = pkm.type[1]?.type.name || "";
+        contentRef.innerHTML += renderPkmCardTemp(type1, type2, index, pkm);
+    });
+}
 
-    function resetStyledButton(styledButton) {
-        oldButtonText = "load more pokemon";
-        styledButton.disabled = false;
-        styledButton.innerHTML = oldButtonText;
-    }
+function styleTheButton() {
+    document.getElementById('input').value = "";
+    let styledButton = document.getElementById("load-more-button")
+    styledButton.disabled = true;
+    let buttonText = "loading".toUpperCase();
+    styledButton.innerHTML = buttonText;
+    styledButton.classList.add("loading-animation");
+    document.getElementById("content").innerHTML += renderNothingFoundTemp();
+    setTimeout(() => {
+        styledButton.classList.remove("loading-animation")
+        resetStyledButton(styledButton);
+        findPokemon();
+    }, 1500);
+}
 
-    function showPreviousPokemon() {
-        if (currentPokemonIndex > 0) {
-            currentPokemonIndex--;
-        } else {
-            currentPokemonIndex = allPkm.length - 1;
-        };
-        renderOverlayCard(currentPokemonIndex)
-        enableFilterTab(currentPokemonIndex)
-    }
+function resetStyledButton(styledButton) {
+    oldButtonText = "load more pokemon";
+    styledButton.disabled = false;
+    styledButton.innerHTML = oldButtonText;
+}
 
-    function showNextPokemon() {
-        if (currentPokemonIndex < allPkm.length - 1) {
-            currentPokemonIndex++;
-        } else {
-            currentPokemonIndex = 0;
-        };
-        renderOverlayCard(currentPokemonIndex);
-        enableFilterTab(currentPokemonIndex)
-    }
+function showPreviousPokemon() {
+    if (currentPokemonIndex > 0) {
+        currentPokemonIndex--;
+    } else {
+        currentPokemonIndex = allPkm.length - 1;
+    };
+    renderOverlayCard(currentPokemonIndex)
+    enableFilterTab(currentPokemonIndex)
+}
 
-    function openFromEvo(pokeName) {
-        const index = allPkm.findIndex(pkm => pkm.name === pokeName);
-        if (index !== -1) {
-            currentPokemonIndex = index;
-            visibilityOverlay(index);
-        } else {
-            console.error(`Pokémon ${pokeName} nicht im allPkm-Array gefunden.`);
-        };
-    }
+function showNextPokemon() {
+    if (currentPokemonIndex < allPkm.length - 1) {
+        currentPokemonIndex++;
+    } else {
+        currentPokemonIndex = 0;
+    };
+    renderOverlayCard(currentPokemonIndex);
+    enableFilterTab(currentPokemonIndex)
+}
+
+function openFromEvo(pokeName) {
+    const index = allPkm.findIndex(pkm => pkm.name === pokeName);
+    if (index !== -1) {
+        currentPokemonIndex = index;
+        visibilityOverlay(index);
+    } else {
+        console.error(`Pokémon ${pokeName} nicht im allPkm-Array gefunden.`);
+    };
+}
