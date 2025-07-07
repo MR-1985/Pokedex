@@ -85,42 +85,9 @@ function mainTabTemp(pkm) {
         `
 }
 
-// function statsTabTemp(index) {
-//     const pkm = allPkm[index];
-//     const statsForStatsTab = pkm.stats.map(statObj => {
-//         const statName = statObj.stat.name;
-//         const baseStat = statObj.base_stat;
-//         return `<p>${statName}: ${baseStat}</p>`;
-//     }).join('');
-//     return statsForStatsTab;
-// }
-
 function statsTabTemp(statName, baseStat) {
     return `<p>${statName}: ${baseStat}</p>`;
 }
-
-// function evoTabTemp(index) {
-//     const pkm = allPkm[index];
-//     const evolutions = pkm.evolutions;
-
-//     if (!evolutions) {
-//         return `<div id="evo-mini-spinner" class="mini-spinner-ball"></div>`;
-//     }
-
-//     if (evolutions.length === 0) {
-//         return `<p>${pkm.name} has no evolutions.</p>`;
-//     }
-
-//     return evolutions.map(evo => {
-//         return `
-//             <div class="evo-container">
-//                 <img src="${evo.image}" alt="${evo.name}" class="evo-img"
-//                      onclick="openFromEvo('${evo.name}')">
-//                 <p>${evo.name}</p>
-//             </div>
-//         `;
-//     }).join('');
-// }
 
 function showMiniSpinnerTemp() {
     return `<div id="evo-mini-spinner" class="mini-spinner-ball"></div>`;
