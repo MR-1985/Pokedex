@@ -2,7 +2,7 @@ let currentIndex = 0;
 let allPkm = [];
 let currentPokemonIndex = 0;
 let urls = [];
-const limit = 30;
+const limit = 20;
 const maxOffset = 1099;
 
 function setOffset() {
@@ -269,7 +269,14 @@ function findPokemon() {
     const contentRef = document.getElementById("content");
     contentRef.innerHTML = "";
     let filteredPkmWithIndex = allPkm.map((pkm, index) => ({ pkm, index })).filter(item => item.pkm.name.startsWith(searchValue));
+    if(filteredPkmWithIndex){
+        hideLoadButton();
+    }
+    if(searchValue.length === 0){
+        showLoadButton();
+    }
     if (filteredPkmWithIndex.length === 0) {
+        showLoadButton();
         styleTheButton();
         return;
     }
