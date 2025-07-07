@@ -2,7 +2,7 @@ let currentIndex = 0;
 let allPkm = [];
 let currentPokemonIndex = 0;
 let urls = [];
-const limit = 7;
+const limit = 30;
 const maxOffset = 1099;
 
 function setOffset() {
@@ -220,11 +220,11 @@ function enableFilterTab(pkmIndex, filterNumber = 0) {
 
 function renderTempForActivFilter(index, pkm) {
     pkm = allPkm[pkm];
-    let html = ""
-    workWithSwitchCase(index, pkm, html);
+    workWithSwitchCase(index, pkm);
 }
 
-function workWithSwitchCase(index, pkm, html) {
+async function workWithSwitchCase(index, pkm) {
+    let html = ""
     switch (index) {
         case 0:
             html = mainTabTemp(pkm);
@@ -235,90 +235,33 @@ function workWithSwitchCase(index, pkm, html) {
             document.getElementById("stats").innerHTML = html;
             break;
         default:
-            html = preparingForEvoTabTemp(pkm);
-            document.getElementById("evo").innerHTML = html;
+            await preparingForEvoTabTemp(pkm)
             break;
     };
 }
 
-function preparingForStatsTabTemp(index) {
-    // const pkm = allPkm[index];
+function preparingForStatsTabTemp(pkm) {
     if (!pkm) {
         console.error("Fehler: Kein Pokémon an diesem Index.");
         return;
     }
-    const statsContainer = document.getElementById("stats");
-    const statsForStatsTab = allPkm.stats.map(statObj => {
+    return pkm.stats.map(statObj => {
         const statName = statObj.stat.name;
         const baseStat = statObj.base_stat;
-        return statsContainer.innerHTML = statsTabTemp(statName, baseStat)
+        return statsTabTemp(statName, baseStat)
     }).join('');
-    return statsForStatsTab;
 }
 
-// function preparingForStatsTabTemp(index) {
-//     const pkm = allPkm[index];
-//     const statsHtml = pkm.stats.map(statObj => {
-//         const statName = statObj.stat.name;
-//         const baseStat = statObj.base_stat;
-//         return statsTabTemp(statName, baseStat);
-//     }).join('');
-//     return statsHtml;
-// }
-
-function preparingForEvoTabTemp() {
-    for (let i = 0; i < allPkm.length; i++) {
-        const evolutions = allPkm[i].evolutions;
-        const evoContainer = document.getElementById("evo");
-        if (!evolutions) {
-            return evoContainer.innerHTML = showMiniSpinnerTemp();
-        }
-        if (evolutions.length === 0) {
-            evoContainer.innerHTML = showErrorTextTemp(pkm);
-            return;
-        }
-        return evolutions.map(evo => {
-            return evoContainer.innerHTML = showEvolutionsTemp(evo);
-        }).join('');
+async function preparingForEvoTabTemp(pkm) {
+    const evoContainer = document.getElementById("evo");
+    const evolutions = pkm.evolutions;
+    if (!evolutions) {
+        evoContainer.innerHTML = showErrorTextTemp(pkm);
+        return;
     }
-
-
-
-
-    // const pkm = allPkm[index];
-    // const evolutions = pkm.evolutions;
-    // const evoContainer = document.getElementById("evo");
-
-    // if (!evolutions) {
-    //     evoContainer.innerHTML = showMiniSpinnerTemp();
-    //     return;
-    // }
-
-    // if (evolutions.length === 0) {
-    //     evoContainer.innerHTML = showErrorTextTemp(pkm);
-    //     return;
-    // }
-
-    // const html = evolutions.map(evo => showEvolutionsTemp(evo)).join('');
-    // evoContainer.innerHTML = html;
-
-
-    // const evoContainer = document.getElementById("evo");
-    // const allEntries = Object.values(allPkm);
-    // for (let i = 0; i < allEntries.length; i++) {
-    //     const pkm = allEntries[i];
-    //     if (!Array.isArray(pkm.evolutions)) {
-    //         evoContainer.innerHTML = showMiniSpinnerTemp();
-    //         return;
-    //     }
-    //     const evo = pkm.evolutions[i];
-    //     if (!evo) {
-    //         evoContainer.innerHTML = showErrorTextTemp(pkm);
-    //         return;
-    //     }
-    //     evoContainer.innerHTML = showEvolutionsTemp(evo);
-    // }
-
+    evoContainer.innerHTML = showMiniSpinnerTemp();
+    await new Promise(resolve => setTimeout(resolve, 500));
+    evoContainer.innerHTML = evolutions.map(evo => showEvolutionsTemp(evo)).join(''); 
 }
 
 function findPokemon() {
